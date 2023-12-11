@@ -4,11 +4,7 @@ module.exports = {
     es2021: true,
     jest: true
   },
-  extends: [
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:react/recommended'
-  ],
+  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'plugin:react/recommended'],
   overrides: [
     {
       env: { node: true },
@@ -41,3 +37,14 @@ module.exports = {
     react: { version: 'detect' }
   }
 };
+
+// {
+//   "extends": ["airbnb", "airbnb-typescript"],
+
+//   "rules": {
+//     "no-underscore-dangle": ["error", { "allow": ["_id"] }]
+//   },
+//   "parserOptions": {
+//     "project": ["path/to/your/tsconfig/file"]
+//   }
+// }

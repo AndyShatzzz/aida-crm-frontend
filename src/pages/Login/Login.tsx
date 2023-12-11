@@ -1,6 +1,6 @@
 export {};
 import React from 'react';
-import Auth from '../../widgets/Auth/model/Auth';
+import Auth from '../../widgets/Auth/ui/Auth';
 
 export const Login = () => {
   return (
@@ -10,6 +10,7 @@ export const Login = () => {
         buttonText={'Войти'}
         infoText={'Еще не зарегистрированы?'}
         authLink={'Регистрация'}
+        authRoute={'/signup'}
       />
     </>
   );

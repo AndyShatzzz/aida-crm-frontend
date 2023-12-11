@@ -4,4 +4,5 @@ export interface iAuthProps {
   buttonText: string;
   infoText: string;
   authLink: string;
+  authRoute: string;
 }

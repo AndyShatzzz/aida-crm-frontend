@@ -8,6 +8,7 @@ import { Registration } from '../../pages/Registration/Registration';
 
 export const App = () => {
   const defaultTheme = createTheme();
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <Routes>
