@@ -1,22 +1,13 @@
 export {};
-import React, { FC, forwardRef } from 'react';
-import { Avatar, Box, Container, Typography, Snackbar, AlertProps, Alert } from '@mui/material';
+import React, { FC } from 'react';
+import { Avatar, Box, Container, Typography, Snackbar } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { iAuthProps } from '../type/iAuthProps';
-import AuthForm from '../../../features/Authorization/ui/FomAuth';
+import { FormAuth } from '../../../features/Authorization';
+import { SnackbarAlert } from '../../../shared/snackbarAlert/snackbarAlert';
 
-const SnackbarAlert = forwardRef<HTMLDivElement, AlertProps>(function SnackbarAlert(props, ref) {
-  return (
-    <Alert
-      elevation={6}
-      ref={ref}
-      {...props}
-    />
-  );
-});
-
-const Auth: FC<iAuthProps> = ({ titleText, buttonText, infoText, authLink, authRoute }) => {
+export const Auth: FC<iAuthProps> = ({ titleText, buttonText, infoText, authLink, authRoute }) => {
   const [authMessage, setAuthMessage] = React.useState<string>('');
   const [isSuccessAuth, setIsSuccessAuth] = React.useState<boolean>(false);
   const [isRejectedAuth, setIsRejectedAuth] = React.useState<boolean>(false);
@@ -44,7 +35,7 @@ const Auth: FC<iAuthProps> = ({ titleText, buttonText, infoText, authLink, authR
         >
           {titleText}
         </Typography>
-        <AuthForm
+        <FormAuth
           buttonText={buttonText}
           infoText={infoText}
           authLink={authLink}
@@ -84,5 +75,3 @@ const Auth: FC<iAuthProps> = ({ titleText, buttonText, infoText, authLink, authR
     </Container>
   );
 };
-
-export default Auth;

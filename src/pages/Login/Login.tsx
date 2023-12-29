@@ -1,6 +1,6 @@
 export {};
 import React from 'react';
-import Auth from '../../widgets/Auth/ui/Auth';
+import { Auth } from '../../widgets/Auth';
 
 export const Login = () => {
   return (

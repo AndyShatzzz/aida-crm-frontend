@@ -24,7 +24,7 @@ module.exports = {
     quotes: ['error', 'single'],
     semi: ['error', 'always'],
     'react/react-in-jsx-scope': 'off',
-    'max-len': ['error', { code: 120, ignoreComments: true, ignorePattern: '^import .*' }],
+    'max-len': ['error', { code: 130, ignoreComments: true, ignorePattern: '^import .*' }],
     'no-console': ['error', { allow: ['error'] }],
     'prefer-const': 'warn',
     'no-duplicate-imports': 'error',

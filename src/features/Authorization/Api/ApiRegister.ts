@@ -1,4 +1,4 @@
-import { BASE_URL } from '../../../shared/BaseUrlApi/ApiHeaders';
+import { BASE_URL } from '../../../shared/api/BaseUrlApi/BaseUrlApi';
 
 export const signup = (name: string, password: string) => {
   return fetch(`${BASE_URL}/signup`, {

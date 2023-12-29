@@ -1,46 +1,90 @@
-# Getting Started with Create React App
+// eslint-disable-next-line no-console
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+{product &&
+product.map((item: { name: string; price: number; \_id: string }, i: number) => (
+<TableRow
+key={item.\_id}
+sx={{ flexGrow: 1, display: 'flex', justifyContent: 'space-between' }} >
+<TableCell>
+<TextField
+size="small"
+variant="outlined"
+sx={{ width: '100px', padding: '0' }}
+autoComplete="off"
+type="text"
+defaultValue={item.name}
+// value={watch(`quantity.${i}.number`) _ item.price}
+{...register(`product.${i}.name` as const, {
+// disabled: true
+})}
+/>
+</TableCell>
+<TableCell>
+<TextField
+size="small"
+sx={{ width: '56px', padding: '0' }}
+autoComplete="off"
+type="number"
+defaultValue={1}
+{...register(`product.${i}.quantity` as const, {
+valueAsNumber: true,
+min: 1
+})}
+/>
+</TableCell>
+<TableCell>
+<TextField
+size="small"
+variant="outlined"
+sx={{ width: '100px', padding: '0' }}
+autoComplete="off"
+type="number"
+defaultValue={item.price}
+// value={watch(`quantity.${i}.number`) _ item.price}
+{...register(`product.${i}.price` as const, {
+valueAsNumber: true,
+min: 1
+// disabled: true
+})}
+/>
+</TableCell>
+</TableRow>
+))}
 
-## Available Scripts
+const counts: any = {};
+const sampleArray = product;
 
-In the project directory, you can run:
+const handleChange = () => {
+// eslint-disable-next-line no-console
+// console.log(
+// product.filter((value: any, index: any, self: any) => index === self.findIndex((t: any) => t.\_id === value.\_id))
+// );
+// setCount(product);
 
-### `npm start`
+    // product.forEach(function (x: any) {
+    //   // eslint-disable-next-line no-console
+    //   console.log(x);
+    //   setCount([
+    //     ...count,
+    //     {
+    //       image: x.image,
+    //       name: x.name,
+    //       price: x.price,
+    //       _id: x._id,
+    //       quantity: (counts[x._id] = (counts[x._id] || 0) + 1)
+    //     }
+    //   ]);
+    //   // (counts[x._id] = (counts[x._id] || 0) + 1);
+    //   // eslint-disable-next-line no-console
+    //   console.log(counts[x._id]);
+    // });
+    const result: any = {};
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+    product.forEach(function (a: any) {
+      if (result[a._id] != undefined) ++result[a._id];
+      else result[a._id] = 1;
+    });
+    // eslint-disable-next-line no-console
+    console.log(result);
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+};
