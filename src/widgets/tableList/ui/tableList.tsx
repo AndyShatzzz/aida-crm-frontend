@@ -1,40 +1,60 @@
 import { Box, Button, Grid, TextField, Typography } from '@mui/material';
 import React, { FC, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-
-interface IInitialState {
-  tableQuantity: number;
-}
-
+import css from './tableList.module.scss';
+import { productsRequest } from '../../../shared/api/productsRequest/productsRequest';
 interface ITableListProps {
-  setIsTableOpen: (paeams: boolean) => void;
+  setIsTableOpen: (params: boolean) => void;
+  setTableNumber: (params: number) => void;
 }
 
-export const TableList: FC<ITableListProps> = ({ setIsTableOpen }) => {
-  const [array, setArray] = useState<number[]>();
-  const table: number[] = [1];
-  const form = useForm<IInitialState>({
-    defaultValues: {
-      tableQuantity: JSON.parse(localStorage.getItem('TableQuantity') || '[]').length || 1
-    },
-    mode: 'onChange'
-  });
-  const { register, handleSubmit, formState } = form;
-  const { isSubmitting, isDirty } = formState;
+export const TableList: FC<ITableListProps> = ({ setIsTableOpen, setTableNumber }) => {
+  const handleClick = (tableNumber: number) => {
+    setIsTableOpen(true);
+    setTableNumber(tableNumber);
+  };
 
-  const onSubmit = (data: IInitialState) => {
-    for (let i = 2; i <= data.tableQuantity; i++) {
-      table.push(i);
+  const { data: cheques } = productsRequest.useGetChequesQuery();
+  const [tableQuantity, setTableQuantity] = useState<any>([]);
+
+  const [openCheques, setOpenCheques] = useState<null | any>([]);
+
+  const findOpenCheques = () => {
+    if (cheques) {
+      const openCheques = cheques.filter((item: any) => {
+        if (item.status === true) {
+          return item;
+        }
+      });
+      setOpenCheques(openCheques);
     }
-
-    setArray(table);
   };
 
   useEffect(() => {
-    if (array) {
-      localStorage.setItem('TableQuantity', JSON.stringify(array));
+    findOpenCheques();
+  }, [cheques]);
+
+  useEffect(() => {
+    setTableQuantity(JSON.parse(localStorage.getItem('TableQuantity') || '[]'));
+
+    if (tableQuantity.length !== 0) {
+      const a = tableQuantity.map((item: any) => {
+        item.open = false;
+        if (openCheques.length !== 0) {
+          openCheques.find((cheque: any) => {
+            if (cheque.tableNumber === item.counter) {
+              return (item.open = true);
+            } else {
+              return (item.open = false);
+            }
+          });
+        }
+        return item;
+      });
+      setTableQuantity(a);
+      localStorage.setItem('TableQuantity', JSON.stringify(a));
     }
-  });
+  }, [cheques, openCheques]);
 
   return (
     <Box
@@ -47,27 +67,6 @@ export const TableList: FC<ITableListProps> = ({ setIsTableOpen }) => {
         alignItems: 'center'
       }}
     >
-      <Box
-        component="form"
-        onSubmit={handleSubmit(onSubmit)}
-        sx={{ width: 200, height: 100, mb: 10 }}
-      >
-        <TextField
-          type="number"
-          fullWidth
-          label="Фича добавления столов"
-          {...register('tableQuantity', {
-            valueAsNumber: true
-          })}
-        />
-        <Button
-          type="submit"
-          fullWidth
-          disabled={isSubmitting || !isDirty}
-        >
-          Submit
-        </Button>
-      </Box>
       <Grid
         container
         rowGap={6}
@@ -75,17 +74,17 @@ export const TableList: FC<ITableListProps> = ({ setIsTableOpen }) => {
         // rowSpacing={6}
         columns={5}
       >
-        {localStorage.getItem('TableQuantity') &&
-          JSON.parse(localStorage.getItem('TableQuantity') || '[]').map((item: any) => (
+        {tableQuantity &&
+          tableQuantity.map((item: any) => (
             <Grid
               key={Math.random()}
               item
               xs={1}
-              bgcolor="#999DA0"
+              className={item.open ? css.myTableOpen : css.myTableClose}
               sx={{ width: 120, height: 120, display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-              onClick={() => setIsTableOpen(true)}
+              onClick={() => handleClick(item.counter)}
             >
-              <Typography>Стол №{item}</Typography>
+              <Typography>Стол №{item.counter}</Typography>
             </Grid>
           ))}
       </Grid>

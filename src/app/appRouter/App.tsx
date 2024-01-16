@@ -13,6 +13,9 @@ import { setTrue } from '../../features/checkToken/ux/initLoggedInSlice';
 import { Products } from '../../pages/products/products';
 import { Home } from '../../pages/home/home';
 import { Menu } from '../../pages/menu/menu';
+import { Cheques } from '../../pages/cheques/cheques';
+import { Settings } from '../../pages/settings/settings';
+import { Statistics } from '../../pages/statistics/statistics';
 
 export const App = () => {
   const initLoggedIn = UseAppSelector(state => state.initLoggedInSlice.loggedIn);
@@ -67,6 +70,18 @@ export const App = () => {
         <Route
           path="/menu"
           element={<ProtectedRoute element={Menu} />}
+        />
+        <Route
+          path="/cheques"
+          element={<ProtectedRoute element={Cheques} />}
+        />
+        <Route
+          path="/settings"
+          element={<ProtectedRoute element={Settings} />}
+        />
+        <Route
+          path="/statistics"
+          element={<ProtectedRoute element={Statistics} />}
         />
       </Routes>
     </ThemeProvider>
