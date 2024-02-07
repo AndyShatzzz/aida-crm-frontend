@@ -1,0 +1,35 @@
+::-webkit-scrollbar {
+  height: 5px;
+  width: 5px;
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  -webkit-border-radius: 1ex;
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--background);
+}
+
+html {
+  scroll-snap-type: y mandatory;
+}
+
+section {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  scroll-snap-align: center;
+  perspective: 500px;
+}
+
+section > div {
+  position: relative;
+  max-height: 100vh;
+  margin: 0;
+  overflow: hidden;
+}

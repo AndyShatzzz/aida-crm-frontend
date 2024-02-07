@@ -1,46 +1,48 @@
-# Getting Started with Create React App
+# A&F CRM - это проект автоматизации вашей кальянной или кофейни.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Реализовано распределение ролей среди работников:
 
-## Available Scripts
+    - регистрация пользователей
+    - авторизация пользователей
+    - изменение должности того или иного работника
 
-In the project directory, you can run:
+## Реализована работа с продуктами:
 
-### `npm start`
+    - добавление нового продукта
+    - редактирование уже существующего товара
+    - изменение количества продукта
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Реализована работа с чеками:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+    - регистрация чеков в базе данных
+    - удаление чеков
+    - изменение открытых чеков
+    - поддержка наличного и безналичного расчета
 
-### `npm test`
+## Реализован просмотр статистики:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+    - по дням
+    - по месяцам
 
-### `npm run build`
+## Реализован учет продукции:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+    - при оплате чеков товар списывается со склада
+    - просмотр остатков товара в реальном времени
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Технологии, использованные в проекте:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+<div>
+  <img src="https://github.com/devicons/devicon/blob/master/icons/git/git-original.svg" title="git" alt="git" width="40" height="40"/>&nbsp
+  <img src="https://github.com/devicons/devicon/blob/master/icons/html5/html5-original.svg" title="html5" alt="html5" width="40" height="40"/>&nbsp
+  <img src="https://github.com/devicons/devicon/blob/master/icons/css3/css3-original.svg" title="css" alt="css" width="40" height="40"/>&nbsp
+  <img src="https://github.com/devicons/devicon/blob/master/icons/javascript/javascript-original.svg" title="JavaScript" alt="javascript" width="40" height="40"/>&nbsp
+ <img src="https://github.com/devicons/devicon/blob/master/icons/typescript/typescript-plain.svg" title="TypeScript" alt="reactjs" width="40" height="40"/>&nbsp
+  <img src="https://github.com/devicons/devicon/blob/master/icons/nodejs/nodejs-original.svg" title="nodejs" alt="nodejs" width="40" height="40"/>&nbsp
+  <img src="https://github.com/devicons/devicon/blob/master/icons/express/express-original.svg" title="express" alt="express" width="40" height="40"/>&nbsp
+  <img src="https://github.com/devicons/devicon/blob/master/icons/mongodb/mongodb-original.svg" title="mongodb" alt="mongodb" width="40" height="40"/>&nbsp
+  <img src="https://github.com/devicons/devicon/blob/master/icons/sass/sass-original.svg" title="sass/scss" alt="sass/scss" width="40" height="40"/>&nbsp;
+ <img src="https://github.com/devicons/devicon/blob/master/icons/redux/redux-original.svg" title="redux" alt="redux" width="40" height="40"/>&nbsp;
+ <img src="https://github.com/devicons/devicon/blob/master/icons/materialui/materialui-original.svg" title="MUI" alt="MUI" width="40" height="40"/>&nbsp;
+</div>
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+# Ссылка на GHPages:

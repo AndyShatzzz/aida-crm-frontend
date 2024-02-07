@@ -1,0 +1,9 @@
+.link {
+  color: #000;
+  margin-left: 2px;
+}
+
+.link:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}/*# sourceMappingURL=authLink.module.css.map */
