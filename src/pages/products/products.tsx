@@ -1,6 +1,6 @@
 import React from 'react';
-import { ProductsList } from '../../widgets/productsList/ui/productsList';
-import { NavBar } from '../../widgets/NavBar/ui/navBar/navBar';
+import { ProductsList } from '../../widgets/productsList';
+import { NavBar } from '../../widgets/NavBar';
 
 export const Products = () => {
   return (

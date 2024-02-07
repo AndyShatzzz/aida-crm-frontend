@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { usersRequest } from '../api/usersRequest/UsersRequest';
 import { productsRequest } from '../api/productsRequest/productsRequest';
-import initLoggedInSlice from '../../features/checkToken/ux/initLoggedInSlice';
+import initLoggedInSlice from '../../features/checkToken/config/initLoggedInSlice';
+import productReducer from '../productSlice/productSlice';
 
 const store = configureStore({
   reducer: {
     initLoggedInSlice: initLoggedInSlice.reducer,
+    productReducer: productReducer,
     [productsRequest.reducerPath]: productsRequest.reducer,
     [usersRequest.reducerPath]: usersRequest.reducer
   },

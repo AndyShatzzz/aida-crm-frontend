@@ -1,6 +1,4 @@
-import React from 'react';
-import { NavBar } from '../../widgets/NavBar/ui/navBar/navBar';
-import { TableList } from '../../widgets/tableList/ui/tableList';
+import { NavBar } from '../../widgets/NavBar';
 import { Sale } from '../../process/sale/ui/sale';
 
 export const Menu = () => {

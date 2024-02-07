@@ -1,43 +1,31 @@
-export const useFilterDateCheques = (cheques: any) =>
-  function (month: string, initValue: number, finalValue: number) {
-    if (cheques) {
-      const filterCheques = cheques.filter((item: any) => {
-        if (item.createdAt.substring(initValue, finalValue) === month && item.status === false) {
-          return item;
-        }
-      });
-      const sumOfFilteredCheques = filterCheques.reduce((prVal: any, item: any) => {
-        return prVal + item.productsList.totalCost;
-      }, 0);
-      return sumOfFilteredCheques;
-    }
+import { useState } from 'react';
+import { ICheque } from '../../../shared/types/ICheque';
+
+export const useFilterDateCheques = (cheques: ICheque[]) => {
+  const [daySum, setDaySum] = useState<number[]>([]);
+  const sumOfFilteredCheques = (month: string, initValue: number, finalValue: number) => {
+    const filterCheques = cheques?.filter((item: ICheque) => {
+      if (item?.createdAt?.substring(initValue, finalValue) === month && item.status === 'closed') {
+        return item;
+      }
+    });
+
+    const sumOfFilteredCheques = filterCheques.reduce((prVal: number, item: ICheque) => {
+      return prVal + (item.productsList.totalCost || 0);
+    }, 0);
+
+    return sumOfFilteredCheques;
   };
 
-export const useFilterDateChequesCash = (cheques: any) =>
-  function (month: string, initValue: number, finalValue: number) {
-    if (cheques) {
-      const filterCheques = cheques.filter((item: any) => {
-        if (item.createdAt.substring(initValue, finalValue) === month && item.status === false) {
-          return item;
-        }
-      });
-      const sumOfFilteredCheques = filterCheques.reduce((prVal: any, item: any) => {
-        return prVal + item.productsList.cash;
-      }, 0);
-      return sumOfFilteredCheques;
-    }
+  const distructSumToDays = (date: string[]) => {
+    const sum = date.map((item: string) => {
+      const initValue = 0;
+      const finalValue = 10;
+      return sumOfFilteredCheques(item, initValue, finalValue);
+    });
+
+    setDaySum(sum);
   };
-export const useFilterDateChequesCard = (cheques: any) =>
-  function (month: string, initValue: number, finalValue: number) {
-    if (cheques) {
-      const filterCheques = cheques.filter((item: any) => {
-        if (item.createdAt.substring(initValue, finalValue) === month && item.status === false) {
-          return item;
-        }
-      });
-      const sumOfFilteredCheques = filterCheques.reduce((prVal: any, item: any) => {
-        return prVal + item.productsList.card;
-      }, 0);
-      return sumOfFilteredCheques;
-    }
-  };
+
+  return [daySum, distructSumToDays] as const;
+};

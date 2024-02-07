@@ -1,5 +1,4 @@
-import { Box, Tab } from '@mui/material';
-import { faker } from '@faker-js/faker';
+import { Box } from '@mui/material';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -11,8 +10,8 @@ import {
   Filler,
   Legend
 } from 'chart.js';
-import { MonthStatistic } from '../../../features/monthStatistic/ui/monthStatistic';
-import { DayStatistic } from '../../../features/dayStatistic/ui/dayStatistic';
+import { MonthStatistic } from '../../../features/monthStatistic';
+import { DayStatistic } from '../../../features/dayStatistic';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Filler, Legend);
 

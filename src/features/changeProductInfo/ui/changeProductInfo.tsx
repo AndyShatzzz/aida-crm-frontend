@@ -1,17 +1,11 @@
 import { Button } from '@mui/material';
-import React, { FC, useState } from 'react';
-import { FormModal } from '../../../shared/formModal/ui/formModal';
-
-interface IChangeProductInfo {
-  _id: string;
-  image: string;
-  name: string;
-  quantity: number;
-  price: number;
-}
+import { FC, useState } from 'react';
+import { FormModal } from '../../../shared/formModal';
+import { IChangeProductInfo } from '../types/IChangeProductInfo';
 
 export const ChangeProductInfo: FC<IChangeProductInfo> = ({ _id, image, name, quantity, price }) => {
   const [open, setOpen] = useState(false);
+
   return (
     <>
       <Button

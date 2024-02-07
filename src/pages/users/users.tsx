@@ -1,6 +1,6 @@
 import React from 'react';
-import { NavBar } from '../../widgets/NavBar/ui/navBar/navBar';
-import { UsersList } from '../../widgets/usersList/ui/usersList';
+import { NavBar } from '../../widgets/NavBar';
+import { UsersList } from '../../widgets/usersList';
 
 export const Users = () => {
   return (

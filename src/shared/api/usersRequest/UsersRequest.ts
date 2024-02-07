@@ -1,12 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
 import { BASE_URL } from '../BaseUrlApi/BaseUrlApi';
-
-type TUsers = {
-  _id: string;
-  avatar: string;
-  name: string;
-  role: string;
-};
+import { TUsers } from './types/TUsers';
 
 export const usersRequest = createApi({
   reducerPath: 'usersRequest',

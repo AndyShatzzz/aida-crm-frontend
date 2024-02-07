@@ -1,39 +1,30 @@
 import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
+import moment from 'moment';
 import { FC, useEffect, useState } from 'react';
-
-interface IFilterDatePickerProps {
-  cheques: any;
-  setFilteredCheques: (params: any) => void;
-}
+import { IFilterDatePickerProps } from '../types/IFilterDatePickerProps';
+import { useFilterDateCheques } from '../hooks/useFilterDateCheques';
 
 export const FilterDatePicker: FC<IFilterDatePickerProps> = ({ cheques, setFilteredCheques }) => {
-  const [date, SetDate] = useState<any | null>(dayjs(''));
+  const [date, SetDate] = useState<Dayjs | null>(dayjs(''));
   const [valueDate, setValueDate] = useState('');
+  const filterDateCheques = useFilterDateCheques();
+
+  useEffect(() => {
+    SetDate(dayjs(`${moment(Date.now()).format('YYYY/MM/DD')}`));
+  }, []);
 
   useEffect(() => {
     if (date) {
-      const month = date.$M + 1 < 10 ? `0${date.$M + 1}` : `${date.$M + 1}`;
-      const day = date.$D < 10 ? `0${date.$D}` : `${date.$D}`;
-      setValueDate(`${date.$y}-${month}-${day}`);
+      setValueDate(dayjs(date).format('YYYY-MM-DD'));
     }
   }, [date]);
 
-  const filterDateCheques = (data: any) => {
-    if (data) {
-      const filterCheques = data.filter((item: any) => {
-        if (item.createdAt.substring(0, 10) === valueDate) {
-          return item;
-        }
-      });
-      setFilteredCheques(filterCheques);
-    }
-  };
-
   useEffect(() => {
-    filterDateCheques(cheques);
-  }, [valueDate]);
+    filterDateCheques(cheques, setFilteredCheques, valueDate);
+  }, [valueDate, cheques]);
+
   return (
     <>
       <LocalizationProvider dateAdapter={AdapterDayjs}>

@@ -1,16 +1,15 @@
-export {};
 import { Box, Button } from '@mui/material';
-import React, { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { iFormAuthProps } from '../../type/iFormAuthProps';
-import { iFormValues } from '../../type/iFormValues';
+import { iFormAuthProps } from '../../types/iFormAuthProps';
+import { iFormValues } from '../../types/iFormValues';
 import { useSignin } from '../../hooks/useSignin';
 import { useSignup } from '../../hooks/useSignup';
 import { FormFields } from '../formFields/formFields';
 import { AuthLink } from '../authLink/authLink';
 import { useAppDispatch } from '../../../../shared/hooks/useAppDispatch';
-import { setTrue } from '../../../checkToken/ux/initLoggedInSlice';
+import { setTrue } from '../../../checkToken/config/initLoggedInSlice';
 
 export const FormAuth: FC<iFormAuthProps> = ({
   buttonText,
@@ -49,6 +48,7 @@ export const FormAuth: FC<iFormAuthProps> = ({
       await signin(data.name, data.password);
     }
   }
+
   useEffect(() => {
     if (isSuccessRegister) {
       setTimeout(() => {

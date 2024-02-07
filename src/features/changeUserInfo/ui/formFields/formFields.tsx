@@ -1,21 +1,6 @@
 import { MenuItem, TextField } from '@mui/material';
-import React, { FC } from 'react';
-
-interface IFormFields {
-  register: any;
-  errors: {
-    avatar?: {
-      message?: string;
-    };
-    name?: {
-      message?: string;
-    };
-    role?: {
-      message?: string;
-    };
-  };
-  role: string;
-}
+import { FC } from 'react';
+import { IFormFields } from '../../types/IFormFields';
 
 export const FormFields: FC<IFormFields> = ({ register, errors, role }) => {
   return (

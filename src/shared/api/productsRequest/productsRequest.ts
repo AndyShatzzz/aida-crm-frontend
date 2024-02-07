@@ -1,57 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
 import { BASE_URL } from '../BaseUrlApi/BaseUrlApi';
-
-type TGetProducts = {
-  _id: string;
-  name: string;
-  quantity: number;
-  price: number;
-  image: string;
-  owner: string;
-};
-
-type TPostProducts = {
-  name: string;
-  quantity: number;
-  price: number;
-  image: string;
-  owner: string;
-  _id: string;
-};
-
-type TGetCheques = {
-  _id?: string;
-  tableNumber: number;
-  status: boolean;
-  productsList: any;
-  owner: string;
-  prevState: any;
-  updatedState?: any;
-  createdAt?: Date; // может быть косяк!!!
-};
-
-type TPostCheque = {
-  tableNumber: number;
-  status: boolean;
-  productsList: any;
-  owner: string;
-  prevState: any;
-};
-
-type TPatchCheque = {
-  _id: string;
-  productsList: {
-    cheque: any;
-    totalCost: number | null;
-  };
-  prevState: any;
-};
-
-type TPatchChequeStatus = {
-  _id: string;
-  status: boolean;
-  productsList: any;
-};
+import { TGetProducts } from './types/TGetProducts';
+import { TPostProducts } from './types/TPostProducts';
+import { TGetCheques } from './types/TGetCheques';
+import { TPostCheque } from './types/TPostCheque';
+import { TPatchChequeStatus } from './types/TPatchChequeStatus';
+import { TPatchCheque } from './types/TPatchCheque';
 
 export const productsRequest = createApi({
   reducerPath: 'productsRequest',
@@ -126,11 +80,36 @@ export const productsRequest = createApi({
           const { data: updatedProduct } = await queryFulfilled;
           dispatch(
             productsRequest.util.updateQueryData('getProducts', undefined, draft => {
+              const product: TGetProducts | undefined = draft?.find(item => item?._id === args?._id);
+              if (product) {
+                product.name = updatedProduct.name;
+                product.quantity = updatedProduct.quantity;
+                product.price = updatedProduct.price;
+                product.image = updatedProduct.image;
+              }
+            })
+          );
+        } catch (err) {
+          // eslint-disable-next-line no-console
+          console.log(err);
+        }
+      }
+    }),
+    patchProductQuantity: build.mutation<TPostProducts, Partial<TPostProducts>>({
+      query: ({ _id, ...data }) => ({
+        url: `products/quantity/${_id}`,
+        method: 'PATCH',
+        body: {
+          quantity: data.quantity
+        }
+      }),
+      async onQueryStarted(args, { queryFulfilled, dispatch }) {
+        try {
+          const { data: updatedProduct } = await queryFulfilled;
+          dispatch(
+            productsRequest.util.updateQueryData('getProducts', undefined, draft => {
               const product: any = draft?.find(item => item?._id === args?._id);
-              product.name = updatedProduct.name;
               product.quantity = updatedProduct.quantity;
-              product.price = updatedProduct.price;
-              product.image = updatedProduct.image;
             })
           );
         } catch (err) {
@@ -227,6 +206,7 @@ export const {
   usePostProductMutation,
   useDeleteProductMutation,
   usePatchProductMutation,
+  usePatchProductQuantityMutation,
   useGetChequesQuery,
   usePostChequeMutation,
   usePatchChequeMutation,

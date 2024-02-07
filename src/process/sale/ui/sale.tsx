@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { SaleCreating } from '../../../widgets/saleCreating/saleCreating';
-import { TableList } from '../../../widgets/tableList/ui/tableList';
+import { SaleCreating } from '../../../widgets/saleCreating';
+import { TableList } from '../../../widgets/tableList';
 
 export const Sale = () => {
   const [isTableOpen, setIsTableOpen] = useState(false);

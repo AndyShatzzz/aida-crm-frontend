@@ -1,11 +1,8 @@
 import { Button } from '@mui/material';
 import React, { FC, useEffect, useState } from 'react';
 import { productsRequest } from '../../../shared/api/productsRequest/productsRequest';
-import { ConfirmationModal } from '../../../shared/confirmationModal/ui/confirmationModal';
-
-interface IDeleteProductsProps {
-  _id: string;
-}
+import { ConfirmationModal } from '../../../shared/confirmationModal';
+import { IDeleteProductsProps } from '../types/IDeleteProductsProps';
 
 export const DeleteProduct: FC<IDeleteProductsProps> = ({ _id }) => {
   const [DeleteProduct] = productsRequest.useDeleteProductMutation();

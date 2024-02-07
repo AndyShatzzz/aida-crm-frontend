@@ -1,59 +1,29 @@
-import { Box, Button, Grid, TextField, Typography } from '@mui/material';
-import React, { FC, useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { Box, Grid, Typography } from '@mui/material';
+import { FC, useEffect } from 'react';
 import css from './tableList.module.scss';
 import { productsRequest } from '../../../shared/api/productsRequest/productsRequest';
-interface ITableListProps {
-  setIsTableOpen: (params: boolean) => void;
-  setTableNumber: (params: number) => void;
-}
+import { ITableListProps } from '../types/ITableListProps';
+import { ITableQuantity } from '../../../shared/types/ITableQuantity';
+import { useFindOpenCheques } from '../../../shared/hooks/useFindOpenCheques';
+import { useSetTableQuantity } from '../hooks/useSetTableQuantity';
 
 export const TableList: FC<ITableListProps> = ({ setIsTableOpen, setTableNumber }) => {
+  const { data: cheques } = productsRequest.useGetChequesQuery();
+
+  const [tableQuantity, handleSetTableQuantity] = useSetTableQuantity();
+  const [openCheques, findOpenCheques] = useFindOpenCheques();
+
   const handleClick = (tableNumber: number) => {
     setIsTableOpen(true);
     setTableNumber(tableNumber);
   };
 
-  const { data: cheques } = productsRequest.useGetChequesQuery();
-  const [tableQuantity, setTableQuantity] = useState<any>([]);
-
-  const [openCheques, setOpenCheques] = useState<null | any>([]);
-
-  const findOpenCheques = () => {
-    if (cheques) {
-      const openCheques = cheques.filter((item: any) => {
-        if (item.status === true) {
-          return item;
-        }
-      });
-      setOpenCheques(openCheques);
-    }
-  };
-
   useEffect(() => {
-    findOpenCheques();
+    findOpenCheques(cheques || []);
   }, [cheques]);
 
   useEffect(() => {
-    setTableQuantity(JSON.parse(localStorage.getItem('TableQuantity') || '[]'));
-
-    if (tableQuantity.length !== 0) {
-      const a = tableQuantity.map((item: any) => {
-        item.open = false;
-        if (openCheques.length !== 0) {
-          openCheques.find((cheque: any) => {
-            if (cheque.tableNumber === item.counter) {
-              return (item.open = true);
-            } else {
-              return (item.open = false);
-            }
-          });
-        }
-        return item;
-      });
-      setTableQuantity(a);
-      localStorage.setItem('TableQuantity', JSON.stringify(a));
-    }
+    handleSetTableQuantity(openCheques);
   }, [cheques, openCheques]);
 
   return (
@@ -71,13 +41,12 @@ export const TableList: FC<ITableListProps> = ({ setIsTableOpen, setTableNumber 
         container
         rowGap={6}
         columnGap={6}
-        // rowSpacing={6}
         columns={5}
       >
         {tableQuantity &&
-          tableQuantity.map((item: any) => (
+          tableQuantity.map((item: ITableQuantity) => (
             <Grid
-              key={Math.random()}
+              key={item.counter}
               item
               xs={1}
               className={item.open ? css.myTableOpen : css.myTableClose}

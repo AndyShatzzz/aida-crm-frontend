@@ -1,11 +1,6 @@
 import { Box, Button, Modal, Typography } from '@mui/material';
-import React, { FC } from 'react';
-
-interface IConfirmationModal {
-  open: boolean;
-  setOpen: (params: boolean) => void;
-  setIsConfirm: (params: boolean) => void;
-}
+import { FC } from 'react';
+import { IConfirmationModal } from '../types/IConfirmationModal';
 
 export const ConfirmationModal: FC<IConfirmationModal> = ({ open, setOpen, setIsConfirm }) => {
   return (

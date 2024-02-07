@@ -1,1 +1,1 @@
-export { UserWidgetInfo } from './ui/userWidgetInfo';
+export { UserWidgetInfo } from './ui/userWidgetInfo/userWidgetInfo';

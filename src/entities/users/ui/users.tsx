@@ -1,16 +1,11 @@
 import { Avatar, List, ListItem, ListItemText, Button, ListItemAvatar } from '@mui/material';
-import React, { FC, useState } from 'react';
+import { FC, useState } from 'react';
 import { ChangeUserInfo } from '../../../features/changeUserInfo/ui/changeUserInfo/changeUserInfo';
+import { IUsers } from '../../../shared/types/IUsers';
 
-interface IUsersList {
-  avatar: string;
-  name: string;
-  role: string;
-  _id: string;
-}
-
-export const Users: FC<IUsersList> = ({ avatar, name, role, _id }) => {
+export const Users: FC<IUsers> = ({ _id, name, role, avatar }) => {
   const [open, setOpen] = useState(false);
+
   return (
     <List
       component="div"
@@ -37,57 +32,6 @@ export const Users: FC<IUsersList> = ({ avatar, name, role, _id }) => {
           role={role}
           _id={_id}
         />
-        {/* <Modal
-          open={open}
-          onClose={() => setOpen(false)}
-          aria-labelledby="parent-modal-title"
-          aria-describedby="parent-modal-description"
-        >
-          <Box
-            bgcolor="background.paper"
-            sx={{ width: '400px' }}
-            style={{ position: 'absolute', top: '30%', left: '38%' }}
-          >
-            <Stack direction="column">
-              <Box component="form">
-                <Typography
-                  variant="h6"
-                  component="h2"
-                  style={{ textAlign: 'center', paddingTop: '16px' }}
-                >
-                  Изменение пользователя
-                </Typography>
-                <TextField
-                  sx={{ mt: 2 }}
-                  label="Аватар"
-                  id="avatar"
-                  type="text"
-                  fullWidth
-                />
-                <TextField
-                  sx={{ mt: 2 }}
-                  label="Имя"
-                  id="name"
-                  type="text"
-                  fullWidth
-                />
-                <TextField
-                  sx={{ mt: 2 }}
-                  label="Должность"
-                  id="role"
-                  type="text"
-                  fullWidth
-                />
-                <Button
-                  size="large"
-                  fullWidth
-                >
-                  Изменить
-                </Button>
-              </Box>
-            </Stack>
-          </Box>
-        </Modal> */}
       </ListItem>
     </List>
   );

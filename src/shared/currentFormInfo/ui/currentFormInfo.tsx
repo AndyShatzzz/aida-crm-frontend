@@ -1,12 +1,6 @@
 import { Avatar, Box, ListItemIcon, ListItemText, Stack } from '@mui/material';
-import React, { FC } from 'react';
-
-interface ICurrentFormInfo {
-  avatar: string;
-  name: string;
-  role: string | number;
-  price?: number;
-}
+import { FC } from 'react';
+import { ICurrentFormInfo } from '../types/ICurrentFormInfo';
 
 export const CurrentFormInfo: FC<ICurrentFormInfo> = ({ avatar, name, role, price }) => {
   return (

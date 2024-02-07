@@ -1,6 +1,6 @@
 import { BASE_URL } from '../../../shared/api/BaseUrlApi/BaseUrlApi';
 
-interface IPatchUserRequest {
+export interface IPatchUserRequest {
   _id: string;
   avatar?: string;
   name?: string;

@@ -1,26 +1,17 @@
 import { Box, Button, Modal, Stack, Typography } from '@mui/material';
-import React, { FC } from 'react';
-import { CurrentFormInfo } from '../../../../shared/currentFormInfo/ui/currentFormInfo';
+import { FC } from 'react';
+import { CurrentFormInfo } from '../../../../shared/currentFormInfo';
 import { useForm } from 'react-hook-form';
 import { usePatchUsersMutation } from '../../../../shared/api/usersRequest/UsersRequest';
 import { FormFields } from '../formFields/formFields';
-
-interface IChangeUserInfo {
-  open: boolean;
-  setOpen: (params: boolean) => void;
-  avatar: string;
-  name: string;
-  role: string;
-  _id: string;
-}
-
-interface IInitialState {
-  avatar?: string;
-  name?: string;
-  role?: string;
-}
+import { IInitialState } from '../../types/IInitialState';
+import { IChangeUserInfo } from '../../types/IChangeUserInfo';
+import { useChangeUserInfoSubmit } from '../../hooks/useChangeUserInfoSubmit';
 
 export const ChangeUserInfo: FC<IChangeUserInfo> = ({ open, setOpen, avatar, name, role, _id }) => {
+  const [patchUsers] = usePatchUsersMutation() || {};
+  const onSubmit = useChangeUserInfoSubmit(patchUsers, setOpen, _id, avatar, name, role);
+
   const form = useForm<IInitialState>({
     defaultValues: {
       avatar: '' || undefined,
@@ -33,17 +24,6 @@ export const ChangeUserInfo: FC<IChangeUserInfo> = ({ open, setOpen, avatar, nam
   const { register, handleSubmit, formState } = form;
   const { errors, isDirty, isSubmitting } = formState;
 
-  const [patchUsers] = usePatchUsersMutation() || {};
-
-  const onSubmit = (data: IInitialState) => {
-    patchUsers({
-      _id: _id,
-      avatar: data.avatar || avatar,
-      name: data.name || name,
-      role: data.role || role
-    });
-    setOpen(false);
-  };
   return (
     <Modal
       open={open}

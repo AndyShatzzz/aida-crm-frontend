@@ -1,16 +1,15 @@
-export {};
-import React, { FC } from 'react';
+import { FC, useState } from 'react';
 import { Avatar, Box, Container, Typography, Snackbar } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { iAuthProps } from '../type/iAuthProps';
+import { iAuthProps } from '../types/iAuthProps';
 import { FormAuth } from '../../../features/Authorization';
 import { SnackbarAlert } from '../../../shared/snackbarAlert/snackbarAlert';
 
 export const Auth: FC<iAuthProps> = ({ titleText, buttonText, infoText, authLink, authRoute }) => {
-  const [authMessage, setAuthMessage] = React.useState<string>('');
-  const [isSuccessAuth, setIsSuccessAuth] = React.useState<boolean>(false);
-  const [isRejectedAuth, setIsRejectedAuth] = React.useState<boolean>(false);
+  const [authMessage, setAuthMessage] = useState<string>('');
+  const [isSuccessAuth, setIsSuccessAuth] = useState<boolean>(false);
+  const [isRejectedAuth, setIsRejectedAuth] = useState<boolean>(false);
 
   return (
     <Container

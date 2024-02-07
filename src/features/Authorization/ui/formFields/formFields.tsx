@@ -1,8 +1,10 @@
 import { TextField } from '@mui/material';
-import React, { FC } from 'react';
+import { FC } from 'react';
+import { UseFormRegister } from 'react-hook-form';
+import { iFormValues } from '../../types/iFormValues';
 
 interface IFormFields {
-  register: any;
+  register: UseFormRegister<iFormValues>;
   errors: {
     name?: {
       message?: string;

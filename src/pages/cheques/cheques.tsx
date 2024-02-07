@@ -1,6 +1,6 @@
 import React from 'react';
-import { ChequesList } from '../../widgets/chequesList/ui/chequesList';
-import { NavBar } from '../../widgets/NavBar/ui/navBar/navBar';
+import { ChequesList } from '../../widgets/chequesList';
+import { NavBar } from '../../widgets/NavBar';
 
 export const Cheques = () => {
   return (

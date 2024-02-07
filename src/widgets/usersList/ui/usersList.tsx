@@ -1,18 +1,10 @@
 import { Box, Divider, List, ListItem, ListSubheader } from '@mui/material';
-import React from 'react';
 import { Users } from '../../../entities/users/ui/users';
-// import { usersRequest } from '../api/UsersRequest';
 import { usersRequest } from '../../../shared/api/usersRequest/UsersRequest';
-
-interface IUsers {
-  _id: string;
-  avatar: string;
-  name: string;
-  role: string;
-}
+import { IUsers } from '../../../shared/types/IUsers';
 
 export const UsersList = () => {
-  const { data } = usersRequest.useGetUsersQuery();
+  const { data: users } = usersRequest.useGetUsersQuery();
   return (
     <Box
       marginTop="84px"
@@ -53,14 +45,14 @@ export const UsersList = () => {
         </ListItem>
       </List>
       <Divider />
-      {data &&
-        data.map((item: IUsers) => (
+      {users &&
+        users?.map((item: IUsers) => (
           <Users
             key={item._id}
-            avatar={item.avatar}
-            role={item.role}
-            name={item.name}
             _id={item._id}
+            name={item.name}
+            role={item.role}
+            avatar={item.avatar}
           />
         ))}
     </Box>

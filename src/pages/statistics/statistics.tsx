@@ -1,6 +1,6 @@
 import React from 'react';
-import { NavBar } from '../../widgets/NavBar/ui/navBar/navBar';
-import { StatisticsList } from '../../widgets/statisticsList/ui/statisticsList';
+import { NavBar } from '../../widgets/NavBar';
+import { StatisticsList } from '../../widgets/statisticsList';
 
 export const Statistics = () => {
   return (

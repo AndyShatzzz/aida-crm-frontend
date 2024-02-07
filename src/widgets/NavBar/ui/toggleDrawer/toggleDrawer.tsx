@@ -1,16 +1,15 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import css from './toggleDrawer.module.scss';
 import { Box, Divider, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import { Link } from 'react-router-dom';
-import GroupIcon from '@mui/icons-material/Group';
-import TapasIcon from '@mui/icons-material/Tapas';
-import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
-import StackedLineChartIcon from '@mui/icons-material/StackedLineChart';
-import StorefrontIcon from '@mui/icons-material/Storefront';
-import SettingsIcon from '@mui/icons-material/Settings';
 import { IToggleDrawerProps } from '../../type/IToggleDrawerProps';
+import { linkData } from '../../lib/constants/linkData';
+import StorefrontIcon from '@mui/icons-material/Storefront';
+import ContactPageIcon from '@mui/icons-material/ContactPage';
+import { usersRequest } from '../../../../shared/api/usersRequest/UsersRequest';
 
 export const ToggleDrawer: FC<IToggleDrawerProps> = ({ isDrawerOpen, setIsDrawerOpen }) => {
+  const { data: user } = usersRequest.useGetUserInfoQuery();
   return (
     <Drawer
       anchor="left"
@@ -21,74 +20,34 @@ export const ToggleDrawer: FC<IToggleDrawerProps> = ({ isDrawerOpen, setIsDrawer
         <List>
           <Link
             className={css.link}
-            to={'/users'}
+            to={'/'}
           >
             <ListItem>
               <ListItemButton>
                 <ListItemIcon>
-                  <GroupIcon />
+                  <ContactPageIcon />
                 </ListItemIcon>
-
-                <ListItemText color="inherit">Пользователи</ListItemText>
+                <ListItemText color="inherit">О проекте</ListItemText>
               </ListItemButton>
             </ListItem>
           </Link>
-          <Link
-            className={css.link}
-            to={'/products'}
-          >
-            <ListItem>
-              <ListItemButton>
-                <ListItemIcon>
-                  <TapasIcon />
-                </ListItemIcon>
+          {user &&
+            user.role !== 'Официант' &&
+            linkData.map((item: any, index: number) => (
+              <Link
+                className={css.link}
+                to={item.link}
+                key={index}
+              >
+                <ListItem>
+                  <ListItemButton>
+                    <ListItemIcon>{<item.icon />}</ListItemIcon>
 
-                <ListItemText color="inherit">Продукты</ListItemText>
-              </ListItemButton>
-            </ListItem>
-          </Link>
-
-          <Link
-            className={css.link}
-            to={'/cheques'}
-          >
-            <ListItem>
-              <ListItemButton>
-                <ListItemIcon>
-                  <ReceiptLongIcon />
-                </ListItemIcon>
-                <ListItemText color="inherit">Чеки</ListItemText>
-              </ListItemButton>
-            </ListItem>
-          </Link>
-          <Link
-            className={css.link}
-            to={'/statistics'}
-          >
-            <ListItem>
-              <ListItemButton>
-                <ListItemIcon>
-                  <StackedLineChartIcon />
-                </ListItemIcon>
-
-                <ListItemText color="inherit">Статистика</ListItemText>
-              </ListItemButton>
-            </ListItem>
-          </Link>
-          <Link
-            className={css.link}
-            to={'/settings'}
-          >
-            <ListItem>
-              <ListItemButton>
-                <ListItemIcon>
-                  <SettingsIcon />
-                </ListItemIcon>
-
-                <ListItemText color="inherit">Настройки</ListItemText>
-              </ListItemButton>
-            </ListItem>
-          </Link>
+                    <ListItemText color="inherit">{item.name}</ListItemText>
+                  </ListItemButton>
+                </ListItem>
+              </Link>
+            ))}
           <Divider />
           <Link
             className={css.link}
@@ -99,7 +58,6 @@ export const ToggleDrawer: FC<IToggleDrawerProps> = ({ isDrawerOpen, setIsDrawer
                 <ListItemIcon>
                   <StorefrontIcon />
                 </ListItemIcon>
-
                 <ListItemText color="inherit">Быстрые продажи</ListItemText>
               </ListItemButton>
             </ListItem>
