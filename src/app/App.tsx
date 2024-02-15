@@ -33,7 +33,6 @@ export const App = () => {
         <Route
           path="/signin"
           element={
-            // const
             initLoggedIn ? (
               <Navigate
                 to="/"
@@ -59,8 +58,12 @@ export const App = () => {
         />
         <Route
           path="/"
-          element={<ProtectedRoute element={Home} />}
+          element={<Home />}
         />
+        {/* <Route
+          path="/"
+          element={<ProtectedRoute element={Home} />}
+        /> */}
         <Route
           path="/users"
           element={<ProtectedRoute element={Users} />}
