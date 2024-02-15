@@ -126,9 +126,9 @@ export const Home = () => {
           id="start"
           ref={ref}
           className={styles.mainInfoContainer}
-          initial={{ opacity: 0, scale: 0.5 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.6, ease: [0, 0.71, 0.2, 1.01] }}
+          // initial={{ opacity: 0, scale: 0.5 }}
+          // whileInView={{ opacity: 1, scale: 1 }}
+          // transition={{ duration: 0.8, delay: 0.6, ease: [0, 0.71, 0.2, 1.01] }}
         >
           <div className={styles.layoutContainer}>
             <motion.img
@@ -141,7 +141,7 @@ export const Home = () => {
             />
             <motion.div
               className={styles.titleContainer}
-              initial={{ opacity: 0, scale: 0.5, x: 300 }}
+              initial={{ opacity: 0, scale: 0.5, x: 100 }}
               whileInView={{ opacity: 1, scale: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 1, ease: [0, 0.71, 0.2, 1.01] }}
             >
@@ -149,7 +149,7 @@ export const Home = () => {
             </motion.div>
             <motion.div
               className={styles.subtitleContainer}
-              initial={{ opacity: 0, scale: 0.5, x: 300 }}
+              initial={{ opacity: 0, scale: 0.5, x: 100 }}
               whileInView={{ opacity: 1, scale: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 1.2, ease: [0, 0.71, 0.2, 1.01] }}
             >
@@ -157,7 +157,7 @@ export const Home = () => {
             </motion.div>
             <motion.div
               className={styles.imageReactContainer}
-              initial={{ opacity: 0, scale: 0.5, x: -300 }}
+              initial={{ opacity: 0, scale: 0.5, x: -100 }}
               whileInView={{ opacity: 1, scale: 1, x: 0 }}
               transition={{ duration: 1, delay: 1.4, ease: [0, 0.71, 0.5, 1.01] }}
             >
@@ -173,7 +173,7 @@ export const Home = () => {
             </motion.div>
             <motion.div
               className={styles.imageTypeScriptContainer}
-              initial={{ opacity: 0, scale: 0.5, x: -300 }}
+              initial={{ opacity: 0, scale: 0.5, x: -100 }}
               whileInView={{ opacity: 1, scale: 1, x: 0 }}
               transition={{ duration: 1, delay: 1.4, ease: [0, 0.71, 0.5, 1.01] }}
             >
@@ -189,7 +189,7 @@ export const Home = () => {
             </motion.div>
             <motion.div
               className={styles.imageReduxContainer}
-              initial={{ opacity: 0, scale: 0.5, x: -300 }}
+              initial={{ opacity: 0, scale: 0.5, x: -100 }}
               whileInView={{ opacity: 1, scale: 1, x: 0 }}
               transition={{ duration: 1, delay: 1.4, ease: [0, 0.71, 0.5, 1.01] }}
             >
@@ -217,9 +217,9 @@ export const Home = () => {
         >
           <motion.h2
             className={styles.aboutMeTitle}
-            initial={{ opacity: 0, scale: 0.5, y: -200 }}
-            whileInView={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1, ease: [0, 0.71, 0.2, 1.01] }}
+            // initial={{ opacity: 0, scale: 0.5, y: -100 }}
+            // whileInView={{ opacity: 1, scale: 1, y: 0 }}
+            // transition={{ duration: 0.8, delay: 1, ease: [0, 0.71, 0.2, 1.01] }}
           >
             Немножко обо мне
           </motion.h2>
@@ -227,7 +227,7 @@ export const Home = () => {
             <motion.div className={styles.aboutMeInfoItem}>
               <motion.h3
                 className={styles.aboutMeNewMessage}
-                initial={{ opacity: 0, scale: 0.5, x: -100 }}
+                initial={{ opacity: 0, scale: 0.5, x: -50 }}
                 whileInView={{ opacity: 1, scale: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 1, ease: [0, 0.71, 0.2, 1.01] }}
               >
@@ -235,7 +235,7 @@ export const Home = () => {
               </motion.h3>
               <motion.div
                 className={styles.aboutMeMessageContainer}
-                initial={{ opacity: 0, scale: 0.5, x: 300 }}
+                initial={{ opacity: 0, scale: 0.5, x: 100 }}
                 whileInView={{ opacity: 1, scale: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 1.2, ease: [0, 0.71, 0.2, 1.01] }}
               >
@@ -244,7 +244,7 @@ export const Home = () => {
 
               <motion.div
                 className={styles.aboutMeMessageContainer}
-                initial={{ opacity: 0, scale: 0.5, x: 300 }}
+                initial={{ opacity: 0, scale: 0.5, x: 100 }}
                 whileInView={{ opacity: 1, scale: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 1.4, ease: [0, 0.71, 0.2, 1.01] }}
               >
@@ -252,7 +252,7 @@ export const Home = () => {
               </motion.div>
               <motion.div
                 className={styles.aboutMeMessageContainer}
-                initial={{ opacity: 0, scale: 0.5, x: 300 }}
+                initial={{ opacity: 0, scale: 0.5, x: 100 }}
                 whileInView={{ opacity: 1, scale: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 1.6, ease: [0, 0.71, 0.2, 1.01] }}
               >
@@ -262,7 +262,7 @@ export const Home = () => {
             <motion.div className={styles.aboutMeInfoItem}>
               <motion.h3
                 className={styles.aboutMeNewMessage}
-                initial={{ opacity: 0, scale: 0.5, x: -100 }}
+                initial={{ opacity: 0, scale: 0.5, x: -50 }}
                 whileInView={{ opacity: 1, scale: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 1.8, ease: [0, 0.71, 0.2, 1.01] }}
               >
@@ -270,7 +270,7 @@ export const Home = () => {
               </motion.h3>
               <motion.div
                 className={styles.aboutMeMessageContainer}
-                initial={{ opacity: 0, scale: 0.5, x: 300 }}
+                initial={{ opacity: 0, scale: 0.5, x: 100 }}
                 whileInView={{ opacity: 1, scale: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 2, ease: [0, 0.71, 0.2, 1.01] }}
               >
@@ -278,7 +278,7 @@ export const Home = () => {
               </motion.div>
               <motion.div
                 className={styles.aboutMeMessageContainer}
-                initial={{ opacity: 0, scale: 0.5, x: 300 }}
+                initial={{ opacity: 0, scale: 0.5, x: 100 }}
                 whileInView={{ opacity: 1, scale: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 2.2, ease: [0, 0.71, 0.2, 1.01] }}
               >
@@ -286,7 +286,7 @@ export const Home = () => {
               </motion.div>
               <motion.div
                 className={styles.aboutMeMessageContainer}
-                initial={{ opacity: 0, scale: 0.5, x: 300 }}
+                initial={{ opacity: 0, scale: 0.5, x: 100 }}
                 whileInView={{ opacity: 1, scale: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 2.4, ease: [0, 0.71, 0.2, 1.01] }}
               >
@@ -296,7 +296,7 @@ export const Home = () => {
             <motion.div className={styles.aboutMeInfoItem}>
               <motion.h3
                 className={styles.aboutMeNewMessage}
-                initial={{ opacity: 0, scale: 0.5, x: -100 }}
+                initial={{ opacity: 0, scale: 0.5, x: -50 }}
                 whileInView={{ opacity: 1, scale: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 2.6, ease: [0, 0.71, 0.2, 1.01] }}
               >
@@ -304,7 +304,7 @@ export const Home = () => {
               </motion.h3>
               <motion.div
                 className={styles.aboutMeMessageContainer}
-                initial={{ opacity: 0, scale: 0.5, x: 300 }}
+                initial={{ opacity: 0, scale: 0.5, x: 100 }}
                 whileInView={{ opacity: 1, scale: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 2.8, ease: [0, 0.71, 0.2, 1.01] }}
               >
@@ -312,7 +312,7 @@ export const Home = () => {
               </motion.div>
               <motion.div
                 className={styles.aboutMeMessageContainer}
-                initial={{ opacity: 0, scale: 0.5, x: 300 }}
+                initial={{ opacity: 0, scale: 0.5, x: 100 }}
                 whileInView={{ opacity: 1, scale: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 3, ease: [0, 0.71, 0.2, 1.01] }}
               >
@@ -320,7 +320,7 @@ export const Home = () => {
               </motion.div>
               <motion.div
                 className={styles.aboutMeMessageContainer}
-                initial={{ opacity: 0, scale: 0.5, x: 300 }}
+                initial={{ opacity: 0, scale: 0.5, x: 100 }}
                 whileInView={{ opacity: 1, scale: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 3.2, ease: [0, 0.71, 0.2, 1.01] }}
               >
@@ -335,9 +335,9 @@ export const Home = () => {
           id="options"
           ref={ref}
           className={styles.techsWrapper}
-          initial={{ opacity: 0, scale: 0.5 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.5, ease: [0, 0.71, 0.2, 1.01] }}
+          // initial={{ opacity: 0, scale: 0.5 }}
+          // whileInView={{ opacity: 1, scale: 1 }}
+          // transition={{ duration: 0.8, delay: 0.5, ease: [0, 0.71, 0.2, 1.01] }}
         >
           <motion.h2
             className={styles.aboutMeTitle}
@@ -553,13 +553,13 @@ export const Home = () => {
           id="options"
           ref={ref}
           className={styles.aboutMeContainer}
-          initial={{ opacity: 0, scale: 0.5 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.5, ease: [0, 0.71, 0.2, 1.01] }}
+          // initial={{ opacity: 0, scale: 0.5 }}
+          // whileInView={{ opacity: 1, scale: 1 }}
+          // transition={{ duration: 0.8, delay: 0.5, ease: [0, 0.71, 0.2, 1.01] }}
         >
           <motion.h2
             className={styles.aboutMeTitle}
-            initial={{ opacity: 0, scale: 0.5, y: -200 }}
+            initial={{ opacity: 0, scale: 0.5, y: -100 }}
             whileInView={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6, ease: [0, 0.71, 0.2, 1.01] }}
           >
@@ -673,7 +673,7 @@ export const Home = () => {
               component="form"
               method="POST"
               onSubmit={sendEmail}
-              sx={{ width: '320px', display: 'flex', flexDirection: 'column' }}
+              sx={{ width: '300px', display: 'flex', flexDirection: 'column' }}
             >
               <TextField
                 label="Введите email"

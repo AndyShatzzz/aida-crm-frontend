@@ -129,7 +129,6 @@
 }
 
 .aboutMeContainer {
-  // background-color: rgba(25, 118, 210, 0.2);
   width: 100%;
   height: 98vh;
   display: flex;
@@ -294,10 +293,187 @@
   line-height: 22px;
 }
 
-a.text:active, /* активная/посещенная ссылка */
-a.text:hover,  /* при наведении */
+a.text:active,
+a.text:hover,
 a.text,
 a {
   text-decoration: none;
   color: #666;
+}
+
+@media screen and (max-width: 768px) {
+  .avatar {
+    width: 200px;
+    height: 200px;
+  }
+
+  .layoutContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .titleContainer {
+    top: -110px;
+    left: -20px;
+  }
+
+  .title {
+    font-size: 10px;
+    line-height: 12px;
+  }
+
+  .subtitleContainer {
+    top: -63px;
+    left: -15px;
+  }
+  .subtitle {
+    font-size: 9px;
+    line-height: 11px;
+    margin-top: -15px;
+    margin-left: -10px;
+    text-align: center;
+    color: #fff;
+  }
+
+  .imageReactContainer {
+    top: 75px;
+    left: 280px;
+    width: 45px;
+    height: 45px;
+  }
+
+  .reactImage {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+    object-position: center;
+  }
+
+  .imageTypeScriptContainer {
+    top: -5px;
+    left: 260px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .typeScriptImage {
+    width: 25px;
+    height: 25px;
+  }
+
+  .imageReduxContainer {
+    top: 170px;
+    left: 260px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .reduxImage {
+    width: 25px;
+    height: 25px;
+    object-fit: contain;
+    object-position: center;
+  }
+
+  .aboutMeTitle {
+    color: #000;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 22px;
+  }
+
+  .aboutMeInfoContainer {
+    flex-direction: column;
+  }
+
+  .aboutMeNewMessage {
+    padding: 10px;
+    width: 75px;
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 10px;
+    text-align: center;
+    margin: 0;
+  }
+
+  .aboutMeMessageContainer {
+    background-size: 150px;
+    padding-top: 8px;
+    padding-bottom: 2px;
+    width: 200px;
+  }
+
+  .aboutMeMessage {
+    color: #fff;
+    width: 125px;
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 10px;
+    margin-left: 30px;
+    margin-top: -2px;
+    text-align: center;
+    height: 30px;
+  }
+
+  .aboutMeTitle {
+    color: #000;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 22px;
+  }
+
+  .techsContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .imageTechs {
+    margin: 0;
+  }
+
+  .aboutProjectContainer {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+  }
+
+  .aboutProjectCards {
+    flex-direction: column;
+    margin: 0;
+    margin-top: 10px;
+  }
+
+  .aboutProjectImage {
+    width: 100px;
+    height: 50px;
+  }
+
+  .aboutProjectTitle {
+    font-size: 10px;
+    line-height: 10px;
+    margin: 0;
+    margin-top: 10px;
+    height: 20px;
+  }
+
+  .aboutProjectText {
+    font-size: 8px;
+    line-height: 8px;
+    margin: 0;
+    margin-top: 5px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .progressBar {
+    position: fixed;
+    top: 55px;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: rgba(255, 0, 106, 0.7);
+    transform-origin: 0%;
+  }
 }
