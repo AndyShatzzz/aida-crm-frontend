@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { IToggleDrawerProps } from '../../type/IToggleDrawerProps';
 import { linkData } from '../../lib/constants/linkData';
 import StorefrontIcon from '@mui/icons-material/Storefront';
+import SettingsIcon from '@mui/icons-material/Settings';
 import ContactPageIcon from '@mui/icons-material/ContactPage';
 import { usersRequest } from '../../../../shared/api/usersRequest/UsersRequest';
 
@@ -48,6 +49,19 @@ export const ToggleDrawer: FC<IToggleDrawerProps> = ({ isDrawerOpen, setIsDrawer
                 </ListItem>
               </Link>
             ))}
+          <Link
+            className={css.link}
+            to={'/settings'}
+          >
+            <ListItem>
+              <ListItemButton>
+                <ListItemIcon>
+                  <SettingsIcon />
+                </ListItemIcon>
+                <ListItemText color="inherit">Настройки</ListItemText>
+              </ListItemButton>
+            </ListItem>
+          </Link>
           <Divider />
           <Link
             className={css.link}

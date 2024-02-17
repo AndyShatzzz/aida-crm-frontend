@@ -2,7 +2,6 @@ import GroupIcon from '@mui/icons-material/Group';
 import TapasIcon from '@mui/icons-material/Tapas';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import StackedLineChartIcon from '@mui/icons-material/StackedLineChart';
-import SettingsIcon from '@mui/icons-material/Settings';
 
 export const linkData = [
   {
@@ -24,12 +23,12 @@ export const linkData = [
     link: '/statistics',
     name: 'Статистика',
     icon: StackedLineChartIcon
-  },
-  {
-    link: '/settings',
-    name: 'Настройки',
-    icon: SettingsIcon
   }
+  // {
+  //   link: '/settings',
+  //   name: 'Настройки',
+  //   icon: SettingsIcon
+  // }
   // {
   //   link: '/menu',
   //   name: 'Быстрые продажи',
