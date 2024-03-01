@@ -126,9 +126,6 @@ export const Home = () => {
           id="start"
           ref={ref}
           className={styles.mainInfoContainer}
-          // initial={{ opacity: 0, scale: 0.5 }}
-          // whileInView={{ opacity: 1, scale: 1 }}
-          // transition={{ duration: 0.8, delay: 0.6, ease: [0, 0.71, 0.2, 1.01] }}
         >
           <div className={styles.layoutContainer}>
             <motion.img
@@ -153,7 +150,7 @@ export const Home = () => {
               whileInView={{ opacity: 1, scale: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 1.2, ease: [0, 0.71, 0.2, 1.01] }}
             >
-              <motion.h2 className={styles.subtitle}>Я начинающий Frontend разработчик</motion.h2>
+              <motion.h2 className={styles.subtitle}>Я Junior Frontend разработчик</motion.h2>
             </motion.div>
             <motion.div
               className={styles.imageReactContainer}
@@ -215,14 +212,7 @@ export const Home = () => {
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.5, ease: [0, 0.71, 0.2, 1.01] }}
         >
-          <motion.h2
-            className={styles.aboutMeTitle}
-            // initial={{ opacity: 0, scale: 0.5, y: -100 }}
-            // whileInView={{ opacity: 1, scale: 1, y: 0 }}
-            // transition={{ duration: 0.8, delay: 1, ease: [0, 0.71, 0.2, 1.01] }}
-          >
-            Немножко обо мне
-          </motion.h2>
+          <motion.h2 className={styles.aboutMeTitle}>Немножко обо мне</motion.h2>
           <div className={styles.aboutMeInfoContainer}>
             <motion.div className={styles.aboutMeInfoItem}>
               <motion.h3
@@ -250,14 +240,14 @@ export const Home = () => {
               >
                 <p className={styles.aboutMeMessage}>Магистратура: ЛГТУ 2018-2020 гг., направление: Юриспруденция</p>
               </motion.div>
-              <motion.div
+              {/* <motion.div
                 className={styles.aboutMeMessageContainer}
                 initial={{ opacity: 0, scale: 0.5, x: 100 }}
                 whileInView={{ opacity: 1, scale: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 1.6, ease: [0, 0.71, 0.2, 1.01] }}
               >
                 <p className={styles.aboutMeMessage}>Яндекс практикум: 2022-2023 гг. по направлению Веб-разработка</p>
-              </motion.div>
+              </motion.div> */}
             </motion.div>
             <motion.div className={styles.aboutMeInfoItem}>
               <motion.h3
@@ -266,7 +256,7 @@ export const Home = () => {
                 whileInView={{ opacity: 1, scale: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 1.8, ease: [0, 0.71, 0.2, 1.01] }}
               >
-                Есть хобби?
+                Есть ли опыт работы?
               </motion.h3>
               <motion.div
                 className={styles.aboutMeMessageContainer}
@@ -274,7 +264,9 @@ export const Home = () => {
                 whileInView={{ opacity: 1, scale: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 2, ease: [0, 0.71, 0.2, 1.01] }}
               >
-                <p className={styles.aboutMeMessage}>Обожаю спорт, занимаюсь армрестлингом, играю в баскетбол</p>
+                <p className={styles.aboutMeMessage}>
+                  После изучения в 2022г HTML и CSS устроился в ООО АВК-Консалтинг
+                </p>
               </motion.div>
               <motion.div
                 className={styles.aboutMeMessageContainer}
@@ -282,7 +274,7 @@ export const Home = () => {
                 whileInView={{ opacity: 1, scale: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 2.2, ease: [0, 0.71, 0.2, 1.01] }}
               >
-                <p className={styles.aboutMeMessage}>Играю в страйкбол, люблю пострелять</p>
+                <p className={styles.aboutMeMessage}>В процессе работы прокачал свои существующие знания</p>
               </motion.div>
               <motion.div
                 className={styles.aboutMeMessageContainer}
@@ -290,7 +282,9 @@ export const Home = () => {
                 whileInView={{ opacity: 1, scale: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 2.4, ease: [0, 0.71, 0.2, 1.01] }}
               >
-                <p className={styles.aboutMeMessage}>В любой не понятной ситуации кодю</p>
+                <p className={styles.aboutMeMessage}>
+                  Изучил JS, React, Redux, TypeScript, Sass, SCSS, Node.js, Express.js
+                </p>
               </motion.div>
             </motion.div>
             <motion.div className={styles.aboutMeInfoItem}>
