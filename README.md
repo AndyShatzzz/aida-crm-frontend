@@ -29,6 +29,26 @@
     - при оплате чеков товар списывается со склада
     - просмотр остатков товара в реальном времени
 
+## Установка 
+
+    ```
+        # Клонирование проекта
+            git clone https://github.com/harryho/react-crm.git
+
+
+            # Установка пакетов node modules
+                cd react-crm
+                npm install
+            
+            # Старт проекта 
+                npm start
+            # or yarn
+                yarn start
+            
+            ## Build для продакшн
+            npm run build
+    ```
+
 ### Технологии, использованные в проекте:
 
 <div>
@@ -44,5 +64,3 @@
  <img src="https://github.com/devicons/devicon/blob/master/icons/redux/redux-original.svg" title="redux" alt="redux" width="40" height="40"/>&nbsp;
  <img src="https://github.com/devicons/devicon/blob/master/icons/materialui/materialui-original.svg" title="MUI" alt="MUI" width="40" height="40"/>&nbsp;
 </div>
-
-# [Ссылка на GHPages](https://andyshatzzz.github.io/aida-crm-frontend/)
