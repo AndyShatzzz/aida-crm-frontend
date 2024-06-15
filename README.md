@@ -31,7 +31,6 @@
 
 ## Установка 
 
-    ```
         # Клонирование проекта
             git clone https://github.com/harryho/react-crm.git
 
@@ -47,7 +46,6 @@
             
             ## Build для продакшн
             npm run build
-    ```
 
 ### Технологии, использованные в проекте:
 
