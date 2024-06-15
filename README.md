@@ -35,16 +35,16 @@
             git clone https://github.com/harryho/react-crm.git
 
 
-            # Установка пакетов node modules
-                cd react-crm
-                npm install
+        # Установка пакетов node modules
+            cd react-crm
+            npm install
             
-            # Старт проекта 
-                npm start
-            # or yarn
-                yarn start
+        # Старт проекта 
+            npm start
+        # or yarn
+            yarn start
             
-            ## Build для продакшн
+        ## Build для продакшн
             npm run build
 
 ### Технологии, использованные в проекте:
