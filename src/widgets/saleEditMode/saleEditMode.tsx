@@ -7,62 +7,145 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 const ITEM_TYPE = 'TABLE';
 
 export const SaleEditMode = () => {
-  const [tables, setTables] = useState<{ id: number; x: number; y: number; width: number; height: number }[]>([]);
+  const [tables, setTables] = useState<{ id: number; x: number; y: number; width: number; height: number }[]>([
+    {
+      id: 1,
+      x: 531,
+      y: 319,
+      width: 150,
+      height: 150
+    },
+    {
+      id: 2,
+      x: 530,
+      y: 124,
+      width: 150,
+      height: 150
+    },
+    {
+      id: 3,
+      x: 763,
+      y: 16,
+      width: 100,
+      height: 100
+    },
+    {
+      id: 4,
+      x: 883,
+      y: 83,
+      width: 100,
+      height: 100
+    },
+    {
+      id: 5,
+      x: 1010,
+      y: 153,
+      width: 100,
+      height: 100
+    },
+    {
+      id: 6,
+      x: 833,
+      y: 290,
+      width: 393,
+      height: 115
+    },
+    {
+      id: 7,
+      x: 900,
+      y: 452,
+      width: 100,
+      height: 100
+    },
+    {
+      id: 8,
+      x: 859,
+      y: 591,
+      width: 62,
+      height: 67
+    },
+    {
+      id: 9,
+      x: 951,
+      y: 589,
+      width: 69,
+      height: 66
+    },
+    {
+      id: 10,
+      x: 1047,
+      y: 588,
+      width: 77,
+      height: 65
+    },
+    {
+      id: 11,
+      x: 1154,
+      y: 587,
+      width: 72,
+      height: 65
+    },
+    {
+      id: 12,
+      x: 121,
+      y: 177,
+      width: 229,
+      height: 210
+    }
+  ]);
 
   const handleDrop = (x: number, y: number) => {
     const newTable = {
-      id: tables.length + 1,
       x,
       y,
       width: 100,
       height: 100
     };
-    setTables([...tables, newTable]);
+    setTables(prev => [...prev, { id: prev.length + 1, ...newTable }]);
+  };
+
+  const updateTablePosition = (id: number, newPosition: any) => {
+    setTables(prev => prev.map(t => (t.id === id ? { ...t, x: newPosition.x, y: newPosition.y } : t)));
+  };
+
+  const updateTableSize = (id: number, width: number, height: number) => {
+    setTables(prev => prev.map(t => (t.id === id ? { ...t, width, height } : t)));
   };
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <Box sx={{ display: 'flex', height: '100vh' }}>
-        <Box
-          style={{
-            width: '200px',
-            height: '100%',
-            borderRight: '2px solid gray',
-            padding: '10px'
-          }}
-        >
-          <Typography variant="h6">Добавление столов</Typography>
-          <DraggableTable />
-          <DropZone onDropTable={handleDrop}>
-            {tables.map(table => (
-              // eslint-disable-next-line react/jsx-key
-              <Rnd
-                size={{ width: table.width, height: table.height }}
-                position={{ x: table?.x, y: table?.y }}
-                onDragStop={(e, d) => {
-                  setTables(prev => prev.map(t => (t.id === table.id ? { ...t, left: d.x, top: d.y } : t)));
-                }}
-                onResizeStop={(e, direction, ref, delta, position) => {
-                  setTables(prev =>
-                    prev.map(t =>
-                      t.id === table.id
-                        ? {
-                            ...t,
-                            width: ref.offsetWidth,
-                            height: ref.offsetHeight,
-                            left: position.x,
-                            top: position.y
-                          }
-                        : t
-                    )
-                  );
+      <Box>
+        <Typography variant="h6">Добавление столов</Typography>
+        <DraggableTable />
+        <DropZone onDropTable={handleDrop}>
+          {tables.map(table => (
+            <Rnd
+              key={table.id}
+              size={{ width: table.width, height: table.height }}
+              position={{ x: table?.x, y: table?.y }}
+              onDragStop={(e, d) => {
+                updateTablePosition(table.id, { x: d.x, y: d.y });
+              }}
+              onResize={(e, direction, ref) => {
+                updateTableSize(table.id, ref.offsetWidth, ref.offsetHeight);
+              }}
+              onResizeStop={(e, direction, ref, delta, position) => {
+                updateTablePosition(table.id, { x: position.x, y: position.y });
+              }}
+            >
+              <div
+                style={{
+                  background: 'lightblue',
+                  border: '1px solid black',
+                  width: table.width,
+                  height: table.height
                 }}
               >
-                <div style={{ background: 'lightblue', border: '1px solid black' }}>Стол №{table.id}</div>
-              </Rnd>
-            ))}
-          </DropZone>
-        </Box>
+                Стол №{table.id}
+              </div>
+            </Rnd>
+          ))}
+        </DropZone>
       </Box>
     </DndProvider>
   );
@@ -102,7 +185,7 @@ const DropZone: React.FC<{ onDropTable: (x: number, y: number) => void; children
     drop: (item, monitor) => {
       const offset = monitor.getClientOffset();
       if (offset) {
-        onDropTable(offset.x - 200, offset.y);
+        onDropTable(offset.x, offset.y - 240);
       }
     }
   }));
@@ -111,9 +194,10 @@ const DropZone: React.FC<{ onDropTable: (x: number, y: number) => void; children
     <Box
       ref={drop}
       style={{
-        flex: 1,
+        width: '100vw',
+        height: '100vh',
         position: 'relative',
-        overflow: 'auto',
+        overflow: 'visible',
         backgroundColor: '#f0f0f0'
       }}
     >
