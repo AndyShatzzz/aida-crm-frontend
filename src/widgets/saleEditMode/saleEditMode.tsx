@@ -1,99 +1,34 @@
-import React, { useState } from 'react';
+import React, { FC } from 'react';
 import { Box, Typography } from '@mui/material';
 import { Rnd } from 'react-rnd';
 import { DndProvider, useDrag, useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { styled } from 'styled-components';
 
 const ITEM_TYPE = 'TABLE';
 
-export const SaleEditMode = () => {
-  const [tables, setTables] = useState<{ id: number; x: number; y: number; width: number; height: number }[]>([
-    {
-      id: 1,
-      x: 531,
-      y: 319,
-      width: 150,
-      height: 150
-    },
-    {
-      id: 2,
-      x: 530,
-      y: 124,
-      width: 150,
-      height: 150
-    },
-    {
-      id: 3,
-      x: 763,
-      y: 16,
-      width: 100,
-      height: 100
-    },
-    {
-      id: 4,
-      x: 883,
-      y: 83,
-      width: 100,
-      height: 100
-    },
-    {
-      id: 5,
-      x: 1010,
-      y: 153,
-      width: 100,
-      height: 100
-    },
-    {
-      id: 6,
-      x: 833,
-      y: 290,
-      width: 393,
-      height: 115
-    },
-    {
-      id: 7,
-      x: 900,
-      y: 452,
-      width: 100,
-      height: 100
-    },
-    {
-      id: 8,
-      x: 859,
-      y: 591,
-      width: 62,
-      height: 67
-    },
-    {
-      id: 9,
-      x: 951,
-      y: 589,
-      width: 69,
-      height: 66
-    },
-    {
-      id: 10,
-      x: 1047,
-      y: 588,
-      width: 77,
-      height: 65
-    },
-    {
-      id: 11,
-      x: 1154,
-      y: 587,
-      width: 72,
-      height: 65
-    },
-    {
-      id: 12,
-      x: 121,
-      y: 177,
-      width: 229,
-      height: 210
-    }
-  ]);
+const StyledTable = styled.div`
+  background: lightblue;
+  border: 1px solid black;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background 0.3s;
 
+  &:hover {
+    background: lightgreen;
+    opacity: 0.7;
+  }
+`;
+
+interface ISaleEditModeProps {
+  tables: any;
+  setTables: any;
+}
+
+export const SaleEditMode: FC<ISaleEditModeProps> = ({ tables, setTables }) => {
   const handleDrop = (x: number, y: number) => {
     const newTable = {
       x,
@@ -101,15 +36,15 @@ export const SaleEditMode = () => {
       width: 100,
       height: 100
     };
-    setTables(prev => [...prev, { id: prev.length + 1, ...newTable }]);
+    setTables((prev: any) => [...prev, { id: prev.length + 1, ...newTable }]);
   };
 
   const updateTablePosition = (id: number, newPosition: any) => {
-    setTables(prev => prev.map(t => (t.id === id ? { ...t, x: newPosition.x, y: newPosition.y } : t)));
+    setTables((prev: any) => prev.map((t: any) => (t.id === id ? { ...t, x: newPosition.x, y: newPosition.y } : t)));
   };
 
   const updateTableSize = (id: number, width: number, height: number) => {
-    setTables(prev => prev.map(t => (t.id === id ? { ...t, width, height } : t)));
+    setTables((prev: any) => prev.map((t: any) => (t.id === id ? { ...t, width, height } : t)));
   };
 
   return (
@@ -118,7 +53,7 @@ export const SaleEditMode = () => {
         <Typography variant="h6">Добавление столов</Typography>
         <DraggableTable />
         <DropZone onDropTable={handleDrop}>
-          {tables.map(table => (
+          {tables.map((table: any) => (
             <Rnd
               key={table.id}
               size={{ width: table.width, height: table.height }}
@@ -133,7 +68,7 @@ export const SaleEditMode = () => {
                 updateTablePosition(table.id, { x: position.x, y: position.y });
               }}
             >
-              <div
+              <StyledTable
                 style={{
                   background: 'lightblue',
                   border: '1px solid black',
@@ -142,7 +77,7 @@ export const SaleEditMode = () => {
                 }}
               >
                 Стол №{table.id}
-              </div>
+              </StyledTable>
             </Rnd>
           ))}
         </DropZone>
@@ -168,7 +103,9 @@ const DraggableTable = () => {
         cursor: 'grab',
         border: '1px solid gray',
         textAlign: 'center',
-        marginTop: '10px'
+        marginTop: '10px',
+        width: '150px',
+        height: '150px'
       }}
     >
       Стол

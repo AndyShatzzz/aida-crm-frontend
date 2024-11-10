@@ -24,6 +24,9 @@ import { usePatchProductQuantity } from '../../hooks/usePatchProductQuantity';
 import { ITableQuantity } from '../../../../shared/types/ITableQuantity';
 import { IProducts } from '../../../../shared/types/IProducts';
 import { ProductsState } from '../../../../shared/productSlice/type/productsState';
+import { BASE_URL } from '../../../../shared/api/BaseUrlApi/BaseUrlApi';
+import LocalPrintshopIcon from '@mui/icons-material/LocalPrintshop';
+import moment from 'moment';
 
 export const SaleCreating: FC<ISaleCreatingProps> = ({ isTableOpen, setIsTableOpen, tableNumber, setTableNumber }) => {
   const { data: resProduct } = productsRequest.useGetProductsQuery();
@@ -49,6 +52,62 @@ export const SaleCreating: FC<ISaleCreatingProps> = ({ isTableOpen, setIsTableOp
   const patchNewChequeStatus = usePatchChequeStatus();
   const findTableNumberCheques = useFindTableNumberCheques(tableNumber, tableQuantity, setTableNumberCheques);
   const handlePatchProductQuantity = usePatchProductQuantity();
+
+  function generateReceipt(items: any) {
+    const maxItemLength = Math.max(...items.map((item: any) => item.name.length));
+    const maxPriceLength = Math.max(...items.map((item: any) => item.price.toString().length));
+    const maxCounterLength = Math.max(...items.map((item: any) => item.counter.toString().length));
+
+    let receipt = '\x1B\x61\x01';
+    receipt += '\x1B\x21\x20';
+    receipt += 'Айда Подымим\n\n\n';
+    receipt += '\x1B\x21\x00';
+    receipt += '\x1B\x61\x00';
+    receipt += `Чек напечатан ${moment(Date.now()).format('DD-MM-YYYY HH:MM:SS')}\n\n\n`;
+    const titleName = 'Наименование'.padEnd(maxItemLength, ' ');
+    const titleCouner = 'Кол-во'.padEnd(maxCounterLength, ' ');
+    const titlePrice = 'Цена'.padEnd(maxPriceLength, ' ');
+    const titleSum = 'Итого'.padEnd(maxPriceLength + 1, ' ');
+    receipt += '\x1B\x21\x09';
+    receipt += `${titleName}         ${titleCouner}         ${titlePrice}        ${titleSum}\n\n`;
+    receipt += '\x1B\x21\x00';
+
+    items.forEach((item: any) => {
+      const name = item.name.padEnd(maxItemLength, ' ');
+      const price = item.price.toString().padStart(maxPriceLength, ' ');
+      const counter = item.counter.toString().padStart(maxCounterLength, ' ');
+
+      receipt += `${name} ...... ${counter} ....... ${price} .... ${counter * price}\n\n`;
+    });
+
+    const total = items.reduce((sum: any, item: any) => sum + item.price * item.counter, 0);
+    receipt += '\x1B\x21\x11';
+    receipt += '\n' + 'ИТОГО:'.padEnd(42) + total.toString().padStart(maxPriceLength, ' ') + ' рублей' + '\n\n';
+    receipt += '\x1B\x21\x10';
+    receipt += 'К оплате:'.padEnd(29) + total.toString().padStart(maxPriceLength, ' ') + ' рублей' + '\n\n';
+
+    return receipt;
+  }
+
+  const printCheque = (formattedMessage: any) => {
+    return fetch(`${BASE_URL}/print`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        message: formattedMessage
+      })
+    })
+      .then(response => response.json())
+      .then(data => console.log(data))
+      .catch(error => console.error('Ошибка:', error));
+  };
+
+  const handlePrintCheque = () => {
+    const message = generateReceipt(products);
+    printCheque(message);
+  };
 
   useEffect(() => {
     if (localStorage.getItem('TableQuantity')) {
@@ -153,14 +212,26 @@ export const SaleCreating: FC<ISaleCreatingProps> = ({ isTableOpen, setIsTableOp
                 <Typography>Итого</Typography>
                 {totalCost && <Typography>{totalCost} Рублей</Typography>}
               </Box>
-              <Button
-                fullWidth
-                variant="outlined"
-                sx={{ mt: 1 }}
-                onClick={handlePostCheque}
-              >
-                Зарегистрировать чек
-              </Button>
+              <Box>
+                <Button
+                  variant="outlined"
+                  sx={{ mt: 1, width: '80%' }}
+                  onClick={handlePostCheque}
+                >
+                  Зарегистрировать чек
+                </Button>
+                <IconButton
+                  size="large"
+                  edge="start"
+                  color="inherit"
+                  aria-label="menu"
+                  sx={{ mt: 1, ml: 1, width: '15%' }}
+                  disabled={tableNumberCheques === undefined || tableNumberCheques === null}
+                  onClick={handlePrintCheque}
+                >
+                  <LocalPrintshopIcon />
+                </IconButton>
+              </Box>
               <Button
                 fullWidth
                 variant="contained"
