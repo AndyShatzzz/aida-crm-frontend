@@ -1,0 +1,12 @@
+export const POS_COMMAND_FORMATTER = {
+  TITLE_TEXT: '\x1B\x21\x20',
+  BOLD_TEXT_VARIANT_1: '\x1B\x21\x11',
+  BOLD_TEXT_VARIANT_2: '\x1B\x21\x10',
+  BOLD_TEXT_VARIANT_3: '\x1B\x21\x09',
+  CENTER_ALIGN: '\x1B\x61\x01',
+  ORDINARY_TEXT: '\x1B\x21\x00',
+  LEFT_ALIGN: '\x1B\x61\x00',
+  LINE_BRAKE: '\n',
+  DOUBLE_LINE_BRAKE: '\n\n',
+  TRIPLE_LINE_BRAKE: '\n\n\n'
+};

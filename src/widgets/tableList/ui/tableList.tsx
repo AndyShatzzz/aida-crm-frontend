@@ -8,6 +8,7 @@ import { useFindOpenCheques } from '../../../shared/hooks/useFindOpenCheques';
 import { useSetTableQuantity } from '../hooks/useSetTableQuantity';
 import { SaleEditMode } from '../../saleEditMode/saleEditMode';
 import styled from 'styled-components';
+import { tablesRequest } from '../../../shared/api/tablesRequest/tablesRequest';
 
 const StyledTable = styled.div<{ width: number; height: number; x: number; y: number }>`
   position: absolute;
@@ -29,99 +30,27 @@ const StyledTable = styled.div<{ width: number; height: number; x: number; y: nu
   }
 `;
 
+type getTables = {
+  tables: {
+    tableNumber: number;
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+    id: number;
+  }[];
+  id: number;
+};
+
 export const TableList: FC<ITableListProps> = ({ setIsTableOpen, setTableNumber }) => {
   const { data: cheques } = productsRequest.useGetChequesQuery();
+  const { data: tablesPosition } = tablesRequest.useGetTablesQuery();
 
   const [tableQuantity, handleSetTableQuantity] = useSetTableQuantity();
   const [openCheques, findOpenCheques] = useFindOpenCheques();
 
   const [editMode, setEditMode] = useState(false);
-  const [tables, setTables] = useState<{ id: number; x: number; y: number; width: number; height: number }[]>([
-    {
-      id: 1,
-      x: 531,
-      y: 319,
-      width: 150,
-      height: 150
-    },
-    {
-      id: 2,
-      x: 530,
-      y: 124,
-      width: 150,
-      height: 150
-    },
-    {
-      id: 3,
-      x: 763,
-      y: 16,
-      width: 100,
-      height: 100
-    },
-    {
-      id: 4,
-      x: 883,
-      y: 83,
-      width: 100,
-      height: 100
-    },
-    {
-      id: 5,
-      x: 1010,
-      y: 153,
-      width: 100,
-      height: 100
-    },
-    {
-      id: 6,
-      x: 833,
-      y: 290,
-      width: 393,
-      height: 115
-    },
-    {
-      id: 7,
-      x: 900,
-      y: 452,
-      width: 100,
-      height: 100
-    },
-    {
-      id: 8,
-      x: 859,
-      y: 591,
-      width: 62,
-      height: 67
-    },
-    {
-      id: 9,
-      x: 951,
-      y: 589,
-      width: 69,
-      height: 66
-    },
-    {
-      id: 10,
-      x: 1047,
-      y: 588,
-      width: 77,
-      height: 65
-    },
-    {
-      id: 11,
-      x: 1154,
-      y: 587,
-      width: 72,
-      height: 65
-    },
-    {
-      id: 12,
-      x: 121,
-      y: 177,
-      width: 229,
-      height: 210
-    }
-  ]);
+  const [tables, setTables] = useState<getTables[] | undefined>();
 
   const handleClick = (tableNumber: number) => {
     setIsTableOpen(true);
@@ -135,6 +64,10 @@ export const TableList: FC<ITableListProps> = ({ setIsTableOpen, setTableNumber 
   useEffect(() => {
     handleSetTableQuantity(openCheques);
   }, [cheques, openCheques]);
+
+  useEffect(() => {
+    setTables(tablesPosition);
+  }, [tablesPosition]);
 
   return (
     <Box
@@ -161,11 +94,12 @@ export const TableList: FC<ITableListProps> = ({ setIsTableOpen, setTableNumber 
       >
         {editMode ? (
           <SaleEditMode
-            tables={tables}
+            tables={tables !== undefined && tables[0].tables}
             setTables={setTables}
           />
         ) : (
-          tables.map(table => (
+          tables !== undefined &&
+          tables[0].tables.map((table: any) => (
             <StyledTable
               key={table.id}
               width={table.width}
@@ -174,7 +108,7 @@ export const TableList: FC<ITableListProps> = ({ setIsTableOpen, setTableNumber 
               y={table.y}
               onClick={() => handleClick(table.id)}
             >
-              Стол №{table.id}
+              Стол №{table.tableNumber}
             </StyledTable>
           ))
         )}

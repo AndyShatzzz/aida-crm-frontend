@@ -1,4 +1,4 @@
-import { Box, Button, Divider, IconButton, Typography } from '@mui/material';
+import { Box, Button, Divider, IconButton, Snackbar, Typography } from '@mui/material';
 import { FC, useEffect, useState } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 import { productsRequest } from '../../../../shared/api/productsRequest/productsRequest';
@@ -24,9 +24,10 @@ import { usePatchProductQuantity } from '../../hooks/usePatchProductQuantity';
 import { ITableQuantity } from '../../../../shared/types/ITableQuantity';
 import { IProducts } from '../../../../shared/types/IProducts';
 import { ProductsState } from '../../../../shared/productSlice/type/productsState';
-import { BASE_URL } from '../../../../shared/api/BaseUrlApi/BaseUrlApi';
 import LocalPrintshopIcon from '@mui/icons-material/LocalPrintshop';
-import moment from 'moment';
+import { generateCheque, printCheque } from '../../../../features/printCheque';
+import { IUsers } from '../../../../shared/types/IUsers';
+import { SnackbarAlert } from '../../../../shared/snackbarAlert/snackbarAlert';
 
 export const SaleCreating: FC<ISaleCreatingProps> = ({ isTableOpen, setIsTableOpen, tableNumber, setTableNumber }) => {
   const { data: resProduct } = productsRequest.useGetProductsQuery();
@@ -40,6 +41,9 @@ export const SaleCreating: FC<ISaleCreatingProps> = ({ isTableOpen, setIsTableOp
   const [tableQuantity, setTableQuantity] = useState<ITableQuantity[]>([]);
   const [isPayModalOpen, setIsPayModalOpen] = useState<boolean>(false);
   const [tableNumberCheques, setTableNumberCheques] = useState<ICheque | null>(null);
+  const [isSnackbarOpen, setIsSnackbarOpen] = useState<boolean>(false);
+  const [snackbarAlertMessage, setSnackbarAlertMessage] = useState<string | null>(null);
+  const [snackbarAlertStatus, setSnackbarAlertStatus] = useState<'success' | 'error' | 'info'>('info');
 
   const dispatch = useDispatch();
   const prevStateProductsQuantity: ProductsState = useSelector((state: RootState) => state.productReducer);
@@ -52,62 +56,6 @@ export const SaleCreating: FC<ISaleCreatingProps> = ({ isTableOpen, setIsTableOp
   const patchNewChequeStatus = usePatchChequeStatus();
   const findTableNumberCheques = useFindTableNumberCheques(tableNumber, tableQuantity, setTableNumberCheques);
   const handlePatchProductQuantity = usePatchProductQuantity();
-
-  function generateReceipt(items: any) {
-    const maxItemLength = Math.max(...items.map((item: any) => item.name.length));
-    const maxPriceLength = Math.max(...items.map((item: any) => item.price.toString().length));
-    const maxCounterLength = Math.max(...items.map((item: any) => item.counter.toString().length));
-
-    let receipt = '\x1B\x61\x01';
-    receipt += '\x1B\x21\x20';
-    receipt += 'Айда Подымим\n\n\n';
-    receipt += '\x1B\x21\x00';
-    receipt += '\x1B\x61\x00';
-    receipt += `Чек напечатан ${moment(Date.now()).format('DD-MM-YYYY HH:MM:SS')}\n\n\n`;
-    const titleName = 'Наименование'.padEnd(maxItemLength, ' ');
-    const titleCouner = 'Кол-во'.padEnd(maxCounterLength, ' ');
-    const titlePrice = 'Цена'.padEnd(maxPriceLength, ' ');
-    const titleSum = 'Итого'.padEnd(maxPriceLength + 1, ' ');
-    receipt += '\x1B\x21\x09';
-    receipt += `${titleName}         ${titleCouner}         ${titlePrice}        ${titleSum}\n\n`;
-    receipt += '\x1B\x21\x00';
-
-    items.forEach((item: any) => {
-      const name = item.name.padEnd(maxItemLength, ' ');
-      const price = item.price.toString().padStart(maxPriceLength, ' ');
-      const counter = item.counter.toString().padStart(maxCounterLength, ' ');
-
-      receipt += `${name} ...... ${counter} ....... ${price} .... ${counter * price}\n\n`;
-    });
-
-    const total = items.reduce((sum: any, item: any) => sum + item.price * item.counter, 0);
-    receipt += '\x1B\x21\x11';
-    receipt += '\n' + 'ИТОГО:'.padEnd(42) + total.toString().padStart(maxPriceLength, ' ') + ' рублей' + '\n\n';
-    receipt += '\x1B\x21\x10';
-    receipt += 'К оплате:'.padEnd(29) + total.toString().padStart(maxPriceLength, ' ') + ' рублей' + '\n\n';
-
-    return receipt;
-  }
-
-  const printCheque = (formattedMessage: any) => {
-    return fetch(`${BASE_URL}/print`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        message: formattedMessage
-      })
-    })
-      .then(response => response.json())
-      .then(data => console.log(data))
-      .catch(error => console.error('Ошибка:', error));
-  };
-
-  const handlePrintCheque = () => {
-    const message = generateReceipt(products);
-    printCheque(message);
-  };
 
   useEffect(() => {
     if (localStorage.getItem('TableQuantity')) {
@@ -185,6 +133,30 @@ export const SaleCreating: FC<ISaleCreatingProps> = ({ isTableOpen, setIsTableOp
     }, 50);
   }
 
+  async function handlePrintCheque(cheque: ICheque | null, user: IUsers | undefined) {
+    try {
+      if (cheque && user) {
+        setSnackbarAlertStatus('info');
+        setSnackbarAlertMessage('Чек печатается...');
+        setIsSnackbarOpen(true);
+        const message = generateCheque(cheque, user);
+        const res = await printCheque(message);
+        if (res.success) {
+          await setSnackbarAlertStatus('success');
+          await setIsSnackbarOpen(true);
+          await setSnackbarAlertMessage(res.message);
+        } else {
+          await setSnackbarAlertStatus('error');
+          await setIsSnackbarOpen(true);
+          await setSnackbarAlertMessage(res.message);
+        }
+      }
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.log(err);
+    }
+  }
+
   return (
     <>
       {isTableOpen && (
@@ -227,7 +199,7 @@ export const SaleCreating: FC<ISaleCreatingProps> = ({ isTableOpen, setIsTableOp
                   aria-label="menu"
                   sx={{ mt: 1, ml: 1, width: '15%' }}
                   disabled={tableNumberCheques === undefined || tableNumberCheques === null}
-                  onClick={handlePrintCheque}
+                  onClick={() => handlePrintCheque(tableNumberCheques, user)}
                 >
                   <LocalPrintshopIcon />
                 </IconButton>
@@ -256,6 +228,18 @@ export const SaleCreating: FC<ISaleCreatingProps> = ({ isTableOpen, setIsTableOp
           >
             <CloseIcon />
           </IconButton>
+          <Snackbar
+            autoHideDuration={4000}
+            open={isSnackbarOpen}
+            onClose={() => setIsSnackbarOpen(state => !state)}
+          >
+            <SnackbarAlert
+              severity={snackbarAlertStatus}
+              onClose={() => setIsSnackbarOpen(state => !state)}
+            >
+              {snackbarAlertMessage}
+            </SnackbarAlert>
+          </Snackbar>
         </Box>
       )}
       <PayForm
