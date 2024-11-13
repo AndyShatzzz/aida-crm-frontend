@@ -10,7 +10,7 @@ type getTables = {
     height: number;
     id: number;
   }[];
-  id: number;
+  _id: number;
 };
 
 type postTables = {
@@ -22,6 +22,18 @@ type postTables = {
   id?: number;
 };
 
+type patchTables = {
+  tables: {
+    tableNumber: number;
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+    id: number;
+  }[];
+  _id: number;
+};
+
 export const tablesRequest = createApi({
   reducerPath: 'tablesRequest',
   baseQuery: fetchBaseQuery({
@@ -31,9 +43,11 @@ export const tablesRequest = createApi({
       headers.set('Content-Type', 'application/json');
     }
   }),
+  tagTypes: ['Tables'],
   endpoints: build => ({
     getTables: build.query<getTables[], void>({
-      query: () => '/tables'
+      query: () => '/tables',
+      providesTags: ['Tables']
     }),
     postTables: build.mutation<postTables, Partial<postTables>>({
       query: data => ({
@@ -42,9 +56,20 @@ export const tablesRequest = createApi({
         body: {
           tables: data
         }
-      })
+      }),
+      invalidatesTags: ['Tables']
+    }),
+    patchTables: build.mutation<patchTables, Partial<patchTables>>({
+      query: data => ({
+        url: `/tables/${data._id}`,
+        method: 'PATCH',
+        body: {
+          tables: data.tables
+        }
+      }),
+      invalidatesTags: ['Tables']
     })
   })
 });
 
-export const { useGetTablesQuery, usePostTablesMutation } = tablesRequest;
+export const { useGetTablesQuery, usePostTablesMutation, usePatchTablesMutation } = tablesRequest;

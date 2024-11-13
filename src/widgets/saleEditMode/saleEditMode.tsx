@@ -1,9 +1,11 @@
-import React, { FC } from 'react';
-import { Box, Typography } from '@mui/material';
+import React, { FC, useEffect, useState } from 'react';
+import { Box, Button, IconButton, Typography } from '@mui/material';
 import { Rnd } from 'react-rnd';
 import { DndProvider, useDrag, useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { styled } from 'styled-components';
+import { tablesRequest } from '../../shared/api/tablesRequest/tablesRequest';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const ITEM_TYPE = 'TABLE';
 
@@ -16,6 +18,7 @@ const StyledTable = styled.div`
   justify-content: center;
   align-items: center;
   transition: background 0.3s;
+  position: relative;
 
   &:hover {
     background: lightgreen;
@@ -26,9 +29,38 @@ const StyledTable = styled.div`
 interface ISaleEditModeProps {
   tables: any;
   setTables: any;
+  editMode: boolean;
+  setEditMode: any;
 }
 
-export const SaleEditMode: FC<ISaleEditModeProps> = ({ tables, setTables }) => {
+type tablesState = {
+  tableNumber: number;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  id: number;
+};
+
+export const SaleEditMode: FC<ISaleEditModeProps> = ({ tables, setTables, editMode, setEditMode }) => {
+  const [editableTables, setEditableTables] = useState<tablesState[]>();
+  const { data: tablesPosition } = tablesRequest.useGetTablesQuery();
+  const [PatchTables] = tablesRequest.usePatchTablesMutation();
+
+  useEffect(() => {
+    if (tables) {
+      setEditableTables(tables);
+    }
+  }, [tables]);
+
+  async function handleUpdateTablePosition() {
+    await PatchTables({
+      _id: tablesPosition && tablesPosition[0]._id,
+      tables: editableTables
+    });
+    await setEditMode((state: any) => !state);
+  }
+
   const handleDrop = (x: number, y: number) => {
     const newTable = {
       x,
@@ -36,53 +68,79 @@ export const SaleEditMode: FC<ISaleEditModeProps> = ({ tables, setTables }) => {
       width: 100,
       height: 100
     };
-    setTables((prev: any) => [...prev, { id: prev.length + 1, ...newTable }]);
+    setEditableTables((prev: any) => [...prev, { id: prev.length + 1, ...newTable }]);
   };
 
   const updateTablePosition = (id: number, newPosition: any) => {
-    setTables((prev: any) => prev.map((t: any) => (t.id === id ? { ...t, x: newPosition.x, y: newPosition.y } : t)));
+    setEditableTables((prev: any) =>
+      prev.map((t: any) => (t.id === id ? { ...t, x: newPosition.x, y: newPosition.y } : t))
+    );
   };
 
   const updateTableSize = (id: number, width: number, height: number) => {
-    setTables((prev: any) => prev.map((t: any) => (t.id === id ? { ...t, width, height } : t)));
+    setEditableTables((prev: any) => prev.map((t: any) => (t.id === id ? { ...t, width, height } : t)));
+  };
+
+  const handleDeleteTable = (e: any, id: number) => {
+    e.stopPropagation();
+    const updateTables = editableTables?.filter(item => item.id !== id);
+    setEditableTables(updateTables);
   };
 
   return (
-    <DndProvider backend={HTML5Backend}>
-      <Box>
-        <Typography variant="h6">Добавление столов</Typography>
-        <DraggableTable />
-        <DropZone onDropTable={handleDrop}>
-          {tables.map((table: any) => (
-            <Rnd
-              key={table.id}
-              size={{ width: table.width, height: table.height }}
-              position={{ x: table?.x, y: table?.y }}
-              onDragStop={(e, d) => {
-                updateTablePosition(table.id, { x: d.x, y: d.y });
-              }}
-              onResize={(e, direction, ref) => {
-                updateTableSize(table.id, ref.offsetWidth, ref.offsetHeight);
-              }}
-              onResizeStop={(e, direction, ref, delta, position) => {
-                updateTablePosition(table.id, { x: position.x, y: position.y });
-              }}
-            >
-              <StyledTable
-                style={{
-                  background: 'lightblue',
-                  border: '1px solid black',
-                  width: table.width,
-                  height: table.height
-                }}
-              >
-                Стол №{table.id}
-              </StyledTable>
-            </Rnd>
-          ))}
-        </DropZone>
-      </Box>
-    </DndProvider>
+    <>
+      <Button
+        variant="contained"
+        size="large"
+        sx={{ mt: 2, mb: 2 }}
+        onClick={handleUpdateTablePosition}
+      >
+        Сохранить столы
+      </Button>
+      <DndProvider backend={HTML5Backend}>
+        <Box>
+          <Typography variant="h6">Добавление столов</Typography>
+          <DraggableTable />
+          <DropZone onDropTable={handleDrop}>
+            {editableTables &&
+              editableTables.map((table: any) => (
+                <Rnd
+                  key={table.id}
+                  size={{ width: table.width, height: table.height }}
+                  position={{ x: table?.x, y: table?.y }}
+                  onDragStop={(e, d) => {
+                    updateTablePosition(table.id, { x: d.x, y: d.y });
+                  }}
+                  onResize={(e, direction, ref) => {
+                    updateTableSize(table.id, ref.offsetWidth, ref.offsetHeight);
+                  }}
+                  onResizeStop={(e, direction, ref, delta, position) => {
+                    updateTablePosition(table.id, { x: position.x, y: position.y });
+                  }}
+                >
+                  <StyledTable
+                    style={{
+                      background: 'lightblue',
+                      border: '1px solid black',
+                      width: table.width,
+                      height: table.height
+                    }}
+                  >
+                    <IconButton
+                      size="small"
+                      sx={{ position: 'absolute', top: '0px', right: '0px' }}
+                      onClick={e => handleDeleteTable(e, table.id)}
+                    >
+                      <DeleteIcon sx={{ width: '15px', height: '15px' }} />
+                    </IconButton>
+                    Стол №{table.id}
+                  </StyledTable>
+                </Rnd>
+              ))}
+          </DropZone>
+        </Box>
+      </DndProvider>
+    </>
   );
 };
 
@@ -105,7 +163,7 @@ const DraggableTable = () => {
         textAlign: 'center',
         marginTop: '10px',
         width: '150px',
-        height: '150px'
+        height: '30px'
       }}
     >
       Стол
