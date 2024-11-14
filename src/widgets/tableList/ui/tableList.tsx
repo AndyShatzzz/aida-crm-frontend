@@ -10,13 +10,13 @@ import { SaleEditMode } from '../../saleEditMode/saleEditMode';
 import styled from 'styled-components';
 import { tablesRequest } from '../../../shared/api/tablesRequest/tablesRequest';
 
-const StyledTable = styled.div<{ width: number; height: number; x: number; y: number; opened: boolean }>`
+const StyledTable = styled.div<{ width: number; height: number; x: number; y: number; opened?: boolean }>`
   position: absolute;
   top: ${props => props.y}px;
   left: ${props => props.x}px;
   width: ${props => props.width}px;
   height: ${props => props.height}px;
-  background: ${props => (props.opened ? 'red' : 'lightblue')};
+  background: ${props => (props.opened ? '#fa9bc9' : 'lightblue')};
   border: 1px solid black;
   display: flex;
   justify-content: center;
