@@ -43,7 +43,6 @@ export const TableList: FC<ITableListProps> = ({ setIsTableOpen, setTableNumber 
   const { data: cheques } = productsRequest.useGetChequesQuery();
   const { data: tablesPosition } = tablesRequest.useGetTablesQuery();
 
-  const [tableQuantity, handleSetTableQuantity] = useSetTableQuantity();
   const [openCheques, findOpenCheques] = useFindOpenCheques();
 
   const [editMode, setEditMode] = useState(false);
@@ -57,11 +56,6 @@ export const TableList: FC<ITableListProps> = ({ setIsTableOpen, setTableNumber 
   useEffect(() => {
     findOpenCheques(cheques || []);
   }, [cheques]);
-
-  // deprecated code, this function is not used
-  useEffect(() => {
-    handleSetTableQuantity(openCheques);
-  }, [cheques, openCheques]);
 
   const updateTablesStatus = () => {
     const updatedTables = tables?.map(table => {

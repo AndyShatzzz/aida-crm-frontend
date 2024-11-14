@@ -23,6 +23,7 @@ module.exports = {
     'linebreak-style': ['error', 'unix'],
     quotes: ['warn', 'single'],
     semi: ['error', 'always'],
+    '@typescript-eslint/no-unused-vars': 'warn',
     'react/react-in-jsx-scope': 'off',
     'max-len': ['error', { code: 130, ignoreComments: true, ignorePattern: '^import .*' }],
     'no-console': 'warn',
@@ -37,14 +38,3 @@ module.exports = {
     react: { version: 'detect' }
   }
 };
-
-// {
-//   "extends": ["airbnb", "airbnb-typescript"],
-
-//   "rules": {
-//     "no-underscore-dangle": ["error", { "allow": ["_id"] }]
-//   },
-//   "parserOptions": {
-//     "project": ["path/to/your/tsconfig/file"]
-//   }
-// }
