@@ -14,12 +14,14 @@ type getTables = {
 };
 
 type postTables = {
-  tableNumber: number;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  id?: number;
+  tables: {
+    tableNumber: number;
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+    id: number;
+  }[];
 };
 
 type patchTables = {
@@ -54,7 +56,7 @@ export const tablesRequest = createApi({
         url: '/tables',
         method: 'POST',
         body: {
-          tables: data
+          tables: data.tables
         }
       }),
       invalidatesTags: ['Tables']

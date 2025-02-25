@@ -26,6 +26,17 @@ const StyledTable = styled.div`
   }
 `;
 
+const defaultTables = [
+  {
+    tableNumber: 1,
+    x: 529,
+    y: 273,
+    width: 141,
+    height: 134,
+    id: 1
+  }
+];
+
 interface ISaleEditModeProps {
   tables: any;
   setTables: any;
@@ -45,6 +56,7 @@ type tablesState = {
 export const SaleEditMode: FC<ISaleEditModeProps> = ({ tables, setTables, editMode, setEditMode }) => {
   const [editableTables, setEditableTables] = useState<tablesState[]>();
   const { data: tablesPosition } = tablesRequest.useGetTablesQuery();
+  const [PostTables] = tablesRequest.usePostTablesMutation();
   const [PatchTables] = tablesRequest.usePatchTablesMutation();
 
   useEffect(() => {
@@ -54,11 +66,18 @@ export const SaleEditMode: FC<ISaleEditModeProps> = ({ tables, setTables, editMo
   }, [tables]);
 
   async function handleUpdateTablePosition() {
-    await PatchTables({
-      _id: tablesPosition && tablesPosition[0]._id,
-      tables: editableTables
-    });
-    await setEditMode((state: any) => !state);
+    if (tablesPosition?.length === 0 || !tablesPosition) {
+      await PostTables({
+        tables: defaultTables
+      });
+      await setEditMode((state: any) => !state);
+    } else {
+      await PatchTables({
+        _id: tablesPosition && tablesPosition[0]._id,
+        tables: editableTables
+      });
+      await setEditMode((state: any) => !state);
+    }
   }
 
   const handleDrop = (x: number, y: number) => {

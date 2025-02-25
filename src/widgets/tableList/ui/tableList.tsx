@@ -29,6 +29,17 @@ const StyledTable = styled.div<{ width: number; height: number; x: number; y: nu
   }
 `;
 
+const defaultTables = [
+  {
+    tableNumber: 1,
+    x: 529,
+    y: 273,
+    width: 141,
+    height: 134,
+    id: 1
+  }
+];
+
 type tablesState = {
   tableNumber: number;
   x: number;
@@ -66,8 +77,10 @@ export const TableList: FC<ITableListProps> = ({ setIsTableOpen, setTableNumber 
   };
 
   useEffect(() => {
-    if (tablesPosition) {
+    if (tablesPosition !== undefined && tablesPosition?.length > 0) {
       setTables(tablesPosition[0].tables);
+    } else {
+      setTables(defaultTables);
     }
   }, [tablesPosition]);
 
