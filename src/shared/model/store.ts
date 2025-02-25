@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { usersRequest } from '../api/usersRequest/UsersRequest';
 import { productsRequest } from '../api/productsRequest/productsRequest';
+import { tablesRequest } from '../api/tablesRequest/tablesRequest';
 import initLoggedInSlice from '../../features/checkToken/config/initLoggedInSlice';
 import productReducer from '../productSlice/productSlice';
 
@@ -9,10 +10,11 @@ const store = configureStore({
     initLoggedInSlice: initLoggedInSlice.reducer,
     productReducer: productReducer,
     [productsRequest.reducerPath]: productsRequest.reducer,
-    [usersRequest.reducerPath]: usersRequest.reducer
+    [usersRequest.reducerPath]: usersRequest.reducer,
+    [tablesRequest.reducerPath]: tablesRequest.reducer
   },
   middleware: getDefaultMiddleware =>
-    getDefaultMiddleware().concat([productsRequest.middleware, usersRequest.middleware])
+    getDefaultMiddleware().concat([productsRequest.middleware, usersRequest.middleware, tablesRequest.middleware])
 });
 
 export default store;

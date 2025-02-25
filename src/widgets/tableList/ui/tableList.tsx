@@ -1,17 +1,63 @@
-import { Box, Grid, Typography } from '@mui/material';
-import { FC, useEffect } from 'react';
+import { Box, Button } from '@mui/material';
+import { FC, useEffect, useState } from 'react';
 import css from './tableList.module.scss';
 import { productsRequest } from '../../../shared/api/productsRequest/productsRequest';
 import { ITableListProps } from '../types/ITableListProps';
 import { ITableQuantity } from '../../../shared/types/ITableQuantity';
 import { useFindOpenCheques } from '../../../shared/hooks/useFindOpenCheques';
 import { useSetTableQuantity } from '../hooks/useSetTableQuantity';
+import { SaleEditMode } from '../../saleEditMode/saleEditMode';
+import styled from 'styled-components';
+import { tablesRequest } from '../../../shared/api/tablesRequest/tablesRequest';
+
+const StyledTable = styled.div<{ width: number; height: number; x: number; y: number; opened?: boolean }>`
+  position: absolute;
+  top: ${props => props.y}px;
+  left: ${props => props.x}px;
+  width: ${props => props.width}px;
+  height: ${props => props.height}px;
+  background: ${props => (props.opened ? '#fa9bc9' : 'lightblue')};
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background 0.3s;
+
+  &:hover {
+    cursor: pointer;
+    opacity: 0.7;
+  }
+`;
+
+const defaultTables = [
+  {
+    tableNumber: 1,
+    x: 529,
+    y: 273,
+    width: 141,
+    height: 134,
+    id: 1
+  }
+];
+
+type tablesState = {
+  tableNumber: number;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  id: number;
+  opened?: boolean;
+};
 
 export const TableList: FC<ITableListProps> = ({ setIsTableOpen, setTableNumber }) => {
   const { data: cheques } = productsRequest.useGetChequesQuery();
+  const { data: tablesPosition } = tablesRequest.useGetTablesQuery();
 
-  const [tableQuantity, handleSetTableQuantity] = useSetTableQuantity();
   const [openCheques, findOpenCheques] = useFindOpenCheques();
+
+  const [editMode, setEditMode] = useState(false);
+  const [tables, setTables] = useState<tablesState[]>();
 
   const handleClick = (tableNumber: number) => {
     setIsTableOpen(true);
@@ -22,9 +68,27 @@ export const TableList: FC<ITableListProps> = ({ setIsTableOpen, setTableNumber 
     findOpenCheques(cheques || []);
   }, [cheques]);
 
+  const updateTablesStatus = () => {
+    const updatedTables = tables?.map(table => {
+      const isOpened = openCheques?.find(item => item.tableNumber === table.id);
+      return isOpened ? { ...table, opened: true } : table;
+    });
+    setTables(updatedTables);
+  };
+
   useEffect(() => {
-    handleSetTableQuantity(openCheques);
-  }, [cheques, openCheques]);
+    if (tablesPosition !== undefined && tablesPosition?.length > 0) {
+      setTables(tablesPosition[0].tables);
+    } else {
+      setTables(defaultTables);
+    }
+  }, [tablesPosition]);
+
+  useEffect(() => {
+    if (tables && tables.length > 0) {
+      updateTablesStatus();
+    }
+  }, [openCheques]);
 
   return (
     <Box
@@ -37,26 +101,44 @@ export const TableList: FC<ITableListProps> = ({ setIsTableOpen, setTableNumber 
         alignItems: 'center'
       }}
     >
-      <Grid
-        container
-        rowGap={6}
-        columnGap={6}
-        columns={5}
+      {!editMode && (
+        <Button
+          variant="contained"
+          size="large"
+          sx={{ mt: 2, mb: 2 }}
+          onClick={() => setEditMode(state => !state)}
+        >
+          Редактировать столы
+        </Button>
+      )}
+
+      <Box
+        sx={{ width: '100vw', height: '100vh', position: 'relative', overflow: 'visible', backgroundColor: '#f0f0f0' }}
       >
-        {tableQuantity &&
-          tableQuantity.map((item: ITableQuantity) => (
-            <Grid
-              key={item.counter}
-              item
-              xs={1}
-              className={item.open ? css.myTableOpen : css.myTableClose}
-              sx={{ width: 120, height: 120, display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-              onClick={() => handleClick(item.counter)}
+        {editMode ? (
+          <SaleEditMode
+            tables={tables !== undefined && tables}
+            setTables={setTables}
+            editMode={editMode}
+            setEditMode={setEditMode}
+          />
+        ) : (
+          tables !== undefined &&
+          tables.map((table: any) => (
+            <StyledTable
+              key={table.id}
+              width={table.width}
+              height={table.height}
+              x={table.x}
+              y={table.y}
+              opened={table.opened}
+              onClick={() => handleClick(table.id)}
             >
-              <Typography>Стол №{item.counter}</Typography>
-            </Grid>
-          ))}
-      </Grid>
+              Стол №{table.id}
+            </StyledTable>
+          ))
+        )}
+      </Box>
     </Box>
   );
 };

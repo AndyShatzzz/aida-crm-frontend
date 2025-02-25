@@ -19,16 +19,17 @@ module.exports = {
   },
   plugins: ['@typescript-eslint', 'react'],
   rules: {
-    indent: ['error', 2],
+    indent: ['warn', 2],
     'linebreak-style': ['error', 'unix'],
-    quotes: ['error', 'single'],
+    quotes: ['warn', 'single'],
     semi: ['error', 'always'],
+    '@typescript-eslint/no-unused-vars': 'warn',
     'react/react-in-jsx-scope': 'off',
     'max-len': ['error', { code: 130, ignoreComments: true, ignorePattern: '^import .*' }],
-    'no-console': ['error', { allow: ['error'] }],
+    'no-console': 'warn',
     'prefer-const': 'warn',
-    'no-duplicate-imports': 'error',
-    'no-multi-spaces': 'error',
+    'no-duplicate-imports': 'warn',
+    'no-multi-spaces': 'warn',
     'no-multiple-empty-lines': ['warn', { max: 1, maxEOF: 1 }],
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-var-requires': 'off'
@@ -37,14 +38,3 @@ module.exports = {
     react: { version: 'detect' }
   }
 };
-
-// {
-//   "extends": ["airbnb", "airbnb-typescript"],
-
-//   "rules": {
-//     "no-underscore-dangle": ["error", { "allow": ["_id"] }]
-//   },
-//   "parserOptions": {
-//     "project": ["path/to/your/tsconfig/file"]
-//   }
-// }
